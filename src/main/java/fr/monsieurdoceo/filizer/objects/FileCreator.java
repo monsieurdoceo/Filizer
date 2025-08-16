@@ -1,6 +1,6 @@
-package fr.gregderiz.filizer.objects;
+package fr.monsieurdoceo.filizer.objects;
 
-import fr.gregderiz.filizer.managers.FileManager;
+import fr.monsieurdoceo.filizer.managers.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -19,9 +19,19 @@ public class FileCreator {
     @Nullable
     public File createDirectory(File parent, String name) {
         File file = new File(parent, name);
-        if (!parent.exists()) if (!parent.mkdir()) return null;
-        if (!file.exists()) if (!file.mkdir()) return null;
-        if (!Files.isDirectory(file.toPath())) return null;
+        if (!parent.exists()) {
+            if (!parent.mkdir()) {
+                return null;
+            }
+        }
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                return null;
+            }
+        }
+        if (!Files.isDirectory(file.toPath())) {
+            return null;
+        }
 
         this.fileManager.addFile(file, true);
         return file;
@@ -37,10 +47,16 @@ public class FileCreator {
     @Nullable
     public File createFile(File parent, String name) {
         File file = new File(parent, name + ".yml");
-        if (!parent.exists()) if (!parent.mkdir()) return null;
+        if (!parent.exists()) {
+            if (!parent.mkdir()) {
+                return null;
+            }
+        }
 
         try {
-            if (!file.createNewFile()) return null;
+            if (!file.createNewFile()) {
+                return null;
+            }
 
             FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(file);
             fileConfiguration.save(file);

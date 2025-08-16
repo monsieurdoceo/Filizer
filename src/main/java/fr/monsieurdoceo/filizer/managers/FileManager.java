@@ -1,9 +1,9 @@
-package fr.gregderiz.filizer.managers;
+package fr.monsieurdoceo.filizer.managers;
 
 import com.google.common.collect.Sets;
-import fr.gregderiz.filizer.controllers.FileController;
-import fr.gregderiz.filizer.controllers.FolderController;
-import fr.gregderiz.filizer.objects.FileCreator;
+import fr.monsieurdoceo.filizer.controllers.FileController;
+import fr.monsieurdoceo.filizer.controllers.FolderController;
+import fr.monsieurdoceo.filizer.objects.FileCreator;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -27,7 +27,9 @@ public final class FileManager {
     }
 
     public void addFile(File file, boolean searchFilesInFolders) {
-        if (file == null) return;
+        if (file == null) {
+            return;
+        }
         if (!Files.isDirectory(file.toPath())) {
             this.files.add(file);
             return;
@@ -38,12 +40,16 @@ public final class FileManager {
                 this.folderController.loopFolder(child);
                 continue;
             }
-            if (!Files.isDirectory(child.toPath())) this.files.add(child);
+            if (!Files.isDirectory(child.toPath())) {
+                this.files.add(child);
+            }
         }
     }
 
     public void removeFile(File file, boolean canBeDeleted) {
-        if (file == null) return;
+        if (file == null) {
+            return;
+        }
         if (Files.isDirectory(file.toPath())) {
             Set<File> fileList = this.folderController.getFolderListFiles(file);
             if (!fileList.isEmpty()) {
@@ -53,16 +59,22 @@ public final class FileManager {
         }
 
         this.files.remove(file);
-        if (canBeDeleted) deleteFile(file);
+        if (canBeDeleted) {
+            deleteFile(file);
+        }
     }
 
     public void deleteFile(File file) {
-        if (file == null) return;
+        if (file == null) {
+            return;
+        }
         if (Files.isDirectory(file.toPath())) {
             Set<File> fileList = this.folderController.getFolderListFiles(file);
             fileList.forEach(this::deleteFile);
         }
-        if (file.delete()) return;
+        if (file.delete()) {
+            return;
+        }
 
         Bukkit.getConsoleSender().sendMessage(MiniMessage.miniMessage()
                 .deserialize("The file " + file.getName() + " was not correctly deleted."));

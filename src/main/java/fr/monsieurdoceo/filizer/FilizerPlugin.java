@@ -1,4 +1,4 @@
-package fr.gregderiz.filizer;
+package fr.monsieurdoceo.filizer;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

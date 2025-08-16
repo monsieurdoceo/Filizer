@@ -1,6 +1,6 @@
-package fr.gregderiz.filizer.controllers;
+package fr.monsieurdoceo.filizer.controllers;
 
-import fr.gregderiz.filizer.managers.FileManager;
+import fr.monsieurdoceo.filizer.managers.FileManager;
 
 import java.io.File;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public final class FileController {
      *  Return {@code true} if the file is found in the corresponding folder by they names otherwise if no file is found,
      *  return {@code false}.
      *
-     *  <p>Additionally this function mean to check if the file is on a folder, for example, if the file is
+     *  <p>Additionally, this function means to check if the file is on a folder, for example, if the file is
      *  on the correct folder than we can manipulate it.
      *
      * @param folderName the name of the folder

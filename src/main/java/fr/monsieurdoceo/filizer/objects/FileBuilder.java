@@ -1,4 +1,4 @@
-package fr.gregderiz.filizer.objects;
+package fr.monsieurdoceo.filizer.objects;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,10 +14,16 @@ public class FileBuilder {
 
     public FileBuilder(File parent, String name) {
         this.file = new File(parent, name + ".yml");
-        if (!parent.exists()) if (!parent.mkdir()) return;
+        if (!parent.exists()) {
+            if (!parent.mkdir()) {
+                return;
+            }
+        }
 
         try {
-            if (!this.file.createNewFile()) return;
+            if (!this.file.createNewFile()) {
+                return;
+            }
 
             this.fileConfiguration = YamlConfiguration.loadConfiguration(this.file);
         } catch (IOException e) {

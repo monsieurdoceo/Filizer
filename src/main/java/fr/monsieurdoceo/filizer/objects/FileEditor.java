@@ -1,4 +1,4 @@
-package fr.gregderiz.filizer.objects;
+package fr.monsieurdoceo.filizer.objects;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -20,7 +20,9 @@ public class FileEditor {
 
     private String search(String name) {
         for (String key : this.fileConfiguration.getKeys(true)) {
-            if (key.contains(name)) return key;
+            if (key.contains(name)) {
+                return key;
+            }
         }
         return name;
     }
@@ -53,10 +55,14 @@ public class FileEditor {
 
     public Set<String> section(String name) {
         String searchedName = search(name);
-        if (!this.fileConfiguration.isConfigurationSection(searchedName)) return null;
+        if (!this.fileConfiguration.isConfigurationSection(searchedName)) {
+            return null;
+        }
 
         ConfigurationSection section = this.fileConfiguration.getConfigurationSection(searchedName);
-        if (section == null) return null;
+        if (section == null) {
+            return null;
+        }
 
         return section.getKeys(false);
     }

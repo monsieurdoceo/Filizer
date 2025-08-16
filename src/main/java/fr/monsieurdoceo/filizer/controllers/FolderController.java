@@ -1,7 +1,7 @@
-package fr.gregderiz.filizer.controllers;
+package fr.monsieurdoceo.filizer.controllers;
 
 import com.google.common.collect.Sets;
-import fr.gregderiz.filizer.managers.FileManager;
+import fr.monsieurdoceo.filizer.managers.FileManager;
 
 import java.io.File;
 import java.util.Optional;
@@ -17,8 +17,10 @@ public final class FolderController {
     }
 
     public void loopFolder(File folder) {
-        File[] fileList = folder.listFiles();
-        if (fileList == null) return;
+        Set<File> fileList = getFolderListFiles(folder);
+        if (fileList.isEmpty()) {
+            return;
+        }
 
         for (File file : fileList) {
             if (file.isDirectory()) {

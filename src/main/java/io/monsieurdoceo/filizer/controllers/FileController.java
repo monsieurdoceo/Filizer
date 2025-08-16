@@ -1,6 +1,6 @@
-package fr.monsieurdoceo.filizer.controllers;
+package io.monsieurdoceo.filizer.controllers;
 
-import fr.monsieurdoceo.filizer.managers.FileManager;
+import io.monsieurdoceo.filizer.managers.FileManager;
 
 import java.io.File;
 import java.util.Optional;

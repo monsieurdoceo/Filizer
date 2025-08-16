@@ -3,7 +3,7 @@ plugins {
     id 'com.gradle.plugin-publish' version '1.3.1'
 }
 
-group = 'fr.monsieurdoceo'
+group = 'io.monsieurdoceo'
 version = '0.1'
 
 repositories {
@@ -28,7 +28,7 @@ gradlePlugin {
     plugins {
         create("FilizerPlugin") {
             id = "io.github.monsieurdoceo.filizer"
-            implementationClass = "fr.monsieurdoceo.filizer.FilizerPlugin"
+            implementationClass = "io.monsieurdoceo.filizer.FilizerPlugin"
             displayName = "Filizer API"
             description = "An API paperMC plugin to configure and manage files on the server."
             tags = ['files', 'api', 'java', 'server', 'github', 'minecraft', 'paper']

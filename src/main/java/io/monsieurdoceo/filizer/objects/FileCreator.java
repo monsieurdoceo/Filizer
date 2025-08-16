@@ -1,6 +1,6 @@
-package fr.monsieurdoceo.filizer.objects;
+package io.monsieurdoceo.filizer.objects;
 
-import fr.monsieurdoceo.filizer.managers.FileManager;
+import io.monsieurdoceo.filizer.managers.FileManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

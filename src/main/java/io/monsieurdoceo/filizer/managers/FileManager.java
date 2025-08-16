@@ -1,9 +1,9 @@
-package fr.monsieurdoceo.filizer.managers;
+package io.monsieurdoceo.filizer.managers;
 
 import com.google.common.collect.Sets;
-import fr.monsieurdoceo.filizer.controllers.FileController;
-import fr.monsieurdoceo.filizer.controllers.FolderController;
-import fr.monsieurdoceo.filizer.objects.FileCreator;
+import io.monsieurdoceo.filizer.controllers.FileController;
+import io.monsieurdoceo.filizer.controllers.FolderController;
+import io.monsieurdoceo.filizer.objects.FileCreator;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

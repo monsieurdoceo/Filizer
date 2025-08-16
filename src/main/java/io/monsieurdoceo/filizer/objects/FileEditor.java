@@ -1,4 +1,4 @@
-package fr.monsieurdoceo.filizer.objects;
+package io.monsieurdoceo.filizer.objects;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

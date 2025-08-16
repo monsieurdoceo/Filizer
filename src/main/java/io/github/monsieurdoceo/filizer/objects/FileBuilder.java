@@ -1,4 +1,4 @@
-package io.monsieurdoceo.filizer.objects;
+package io.github.monsieurdoceo.filizer.objects;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

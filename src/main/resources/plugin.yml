@@ -1,6 +1,6 @@
 name: Filizer
 version: '0.1'
-main: io.monsieurdoceo.filizer.FilizerPlugin
+main: io.github.monsieurdoceo.filizer.FilizerPlugin
 api-version: '1.21'
 load: STARTUP
 authors: [ GregDeRiz ]

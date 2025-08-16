@@ -1,7 +1,7 @@
-package io.monsieurdoceo.filizer.controllers;
+package io.github.monsieurdoceo.filizer.controllers;
 
 import com.google.common.collect.Sets;
-import io.monsieurdoceo.filizer.managers.FileManager;
+import io.github.monsieurdoceo.filizer.managers.FileManager;
 
 import java.io.File;
 import java.util.Optional;

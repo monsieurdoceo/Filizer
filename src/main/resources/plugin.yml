@@ -1,0 +1,4 @@
+name: Filizer
+version: 1.0.0
+main: github.monsieurdoceo.filizer.FilizerPlugin
+api-version: 1.21

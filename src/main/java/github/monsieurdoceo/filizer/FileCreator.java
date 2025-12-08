@@ -18,10 +18,14 @@ public class FileCreator {
             try {
                 this.file.createNewFile();
             } catch (IOException ex) {
-                throw new RuntimeException(
-                    "Couldn't create the file [" + name + "].",
-                    ex
+                Bukkit.getLogger().severe(
+                    "Filizer: Couldn't create file [" +
+                        name +
+                        "] in directory [" +
+                        parent.getPath() +
+                        "]."
                 );
+                ex.printStackTrace();
             }
         }
     }
@@ -34,22 +38,47 @@ public class FileCreator {
     }
 
     public FileCreator(File parent, String name) {
-        createFile(parent, name);
-        loadConfiguration();
-    }
-
-    public FileCreator(String path, String name) {
-        File parent = new File(path);
-        if (!parent.exists()) {
-            if (!parent.mkdirs()) {
-                Bukkit.getLogger().info(
-                    "Couldn't create the directory [" + name + "]."
-                );
-            }
+        if (parent == null || name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                "Filizer: Parent and file name cannot be empty or null. Cannot create the file."
+            );
         }
 
         createFile(parent, name);
-        loadConfiguration();
+    }
+
+    public FileCreator(String path, String name) {
+        if (
+            path == null ||
+            path.trim().isEmpty() ||
+            name == null ||
+            name.trim().isEmpty()
+        ) {
+            throw new IllegalArgumentException(
+                "Filizer: Path and file name cannot be empty or null. Cannot create the file."
+            );
+        }
+
+        File parent = new File(path);
+        if (!parent.exists()) {
+            if (!parent.mkdirs()) {
+                Bukkit.getLogger().severe(
+                    "Filizer: Failed to create directory [" +
+                        path +
+                        "]. Cannot initialize file."
+                );
+                return;
+            }
+        } else if (!parent.isDirectory()) {
+            Bukkit.getLogger().severe(
+                "Filizer: Path [" +
+                    path +
+                    "] is an existing file, not a directory. Cannot initialize file."
+            );
+            return;
+        }
+
+        createFile(parent, name);
     }
 
     public File getFile() {

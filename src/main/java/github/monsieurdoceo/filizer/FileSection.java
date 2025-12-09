@@ -1,6 +1,7 @@
 package github.monsieurdoceo.filizer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,10 +23,18 @@ public class FileSection {
         return this;
     }
 
-    public void createSection(FileConfiguration config) {
-        if (config == null) return;
+    public FileSection set(FileSection fileSection) {
+        if (fileSection == null || !fileSection.hasValidName()) return this;
 
-        config.createSection(this.name, this.data);
+        this.data.put(fileSection.getName(), fileSection.getData());
+        return this;
+    }
+
+    public FileSection list(String name, List<?> values) {
+        if (name == null || name.trim().isEmpty()) return this;
+
+        this.data.put(name, values);
+        return this;
     }
 
     public String getName() {

@@ -39,17 +39,17 @@ public class FileBuilder {
         return this;
     }
 
+    public FileBuilder set(FileSection fileSection) {
+        if (fileSection == null || !fileSection.hasValidName()) return this;
+
+        this.config.createSection(fileSection.getName(), fileSection.getData());
+        return this;
+    }
+
     public FileBuilder list(String name, List<?> values) {
         if (name == null || name.trim().isEmpty()) return this;
 
         this.config.set(name, values);
-        return this;
-    }
-
-    public FileBuilder section(FileSection fileSection) {
-        if (fileSection == null || !fileSection.hasValidName()) return this;
-
-        fileSection.createSection(this.config);
         return this;
     }
 

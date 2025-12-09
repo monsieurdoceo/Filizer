@@ -3,6 +3,7 @@ package github.monsieurdoceo.filizer;
 import java.io.File;
 import java.io.IOException;
 import java.lang.IllegalArgumentException;
+import java.util.concurrent.CompletableFuture;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,7 +14,7 @@ public class FileCreator {
     private YamlConfiguration config;
 
     private void createFile(File parent, String name) {
-        this.file = new File(parent, name);
+        this.file = new File(parent, name + ".yml");
         if (!this.file.exists()) {
             try {
                 this.file.createNewFile();

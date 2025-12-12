@@ -1,8 +1,7 @@
 package github.monsieurdoceo.filizer;
 
+import github.monsieurdoceo.filizer.CustomFile;
 import github.monsieurdoceo.filizer.FileAccessor;
-import github.monsieurdoceo.filizer.FileBuilder;
-import github.monsieurdoceo.filizer.FileCreator;
 import github.monsieurdoceo.filizer.FileSection;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -16,11 +15,16 @@ public class TestCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack source, String[] args) {
         String name = args[0];
-        FileCreator fileCreator = new FileCreator("plugins/Filizer", name);
-        File file = new FileBuilder(fileCreator)
+        CustomFile customFile = new CustomFile("plugins/Filizer", name);
+        customFile
+            .builder()
             .set("name", name.toUpperCase())
-            .set("length", name.length())
-            .list("groups", Arrays.asList("mama", "dada", "ratata"))
+            .set("length", name.length());
+        customFile
+            .builder()
+            .list("groups", Arrays.asList("mama", "dada", "ratata"));
+        customFile
+            .builder()
             .set(
                 new FileSection("players")
                     .set(
@@ -36,10 +40,10 @@ public class TestCommand implements BasicCommand {
                             .set("allowFlight", true)
                     )
                     .list("ratata", Arrays.asList("Mango", "Tomato"))
-            )
-            .save();
+            );
+        customFile.builder().save();
 
-        FileAccessor fileAccessor = new FileAccessor(fileCreator);
+        FileAccessor fileAccessor = new FileAccessor(customFile.creator());
         String fileName = fileAccessor.getString("name");
         int length = fileAccessor.getInt("length");
         source

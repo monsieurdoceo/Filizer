@@ -38,16 +38,6 @@ public class FileCreator {
         return true;
     }
 
-    public FileCreator(File parent, String name) {
-        if (parent == null || name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                "Filizer: Parent and file name cannot be empty or null. Cannot create the file."
-            );
-        }
-
-        createFile(parent, name);
-    }
-
     public FileCreator(String path, String name) {
         if (
             path == null ||

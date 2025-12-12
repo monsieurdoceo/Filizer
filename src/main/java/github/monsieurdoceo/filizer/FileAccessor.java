@@ -41,8 +41,8 @@ public class FileAccessor {
         return this.config.getBoolean(path);
     }
 
-    public List<String> getList(String path) {
-        return this.config.getStringList(path);
+    public List<?> getList(String path) {
+        return this.config.getList(path);
     }
 
     public ConfigurationSection getSection(String path) {

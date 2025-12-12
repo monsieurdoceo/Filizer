@@ -53,12 +53,11 @@ public class FileBuilder {
         return this;
     }
 
-    public File save() {
+    public void save() {
         try {
             this.config.save(this.file);
         } catch (IOException ex) {
             throw new RuntimeException("Error couldn't save the file.", ex);
         }
-        return this.file;
     }
 }

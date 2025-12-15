@@ -2,6 +2,7 @@ package github.monsieurdoceo.filizer;
 
 import github.monsieurdoceo.filizer.CustomFile;
 import github.monsieurdoceo.filizer.FileAccessor;
+import github.monsieurdoceo.filizer.FileManager;
 import github.monsieurdoceo.filizer.FileSection;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -14,6 +15,7 @@ public class TestCommand implements BasicCommand {
 
     @Override
     public void execute(CommandSourceStack source, String[] args) {
+        FileManager fileManager = new FileManager();
         String name = args[0];
         CustomFile customFile = new CustomFile("plugins/Filizer", name);
         customFile
@@ -42,8 +44,9 @@ public class TestCommand implements BasicCommand {
                     .list("ratata", Arrays.asList("Mango", "Tomato"))
             );
         customFile.builder().save();
+        fileManager.addFile(customFile);
 
-        FileAccessor fileAccessor = new FileAccessor(customFile.creator());
+        FileAccessor fileAccessor = fileManager.readFileByName(name);
         String fileName = fileAccessor.getString("name");
         int length = fileAccessor.getInt("length");
         source

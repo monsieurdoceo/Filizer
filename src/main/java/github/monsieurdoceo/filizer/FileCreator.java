@@ -13,31 +13,6 @@ public class FileCreator {
     private File file;
     private YamlConfiguration config;
 
-    private void createFile(File parent, String name) {
-        this.file = new File(parent, name + ".yml");
-        if (!this.file.exists()) {
-            try {
-                this.file.createNewFile();
-            } catch (IOException ex) {
-                Bukkit.getLogger().severe(
-                    "Filizer: Couldn't create file [" +
-                        name +
-                        "] in directory [" +
-                        parent.getPath() +
-                        "]."
-                );
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public boolean loadConfiguration() {
-        if (this.file == null || !this.file.exists()) return false;
-
-        this.config = YamlConfiguration.loadConfiguration(this.file);
-        return true;
-    }
-
     public FileCreator(String path, String name) {
         if (
             path == null ||
@@ -70,6 +45,31 @@ public class FileCreator {
         }
 
         createFile(parent, name);
+    }
+
+    private void createFile(File parent, String name) {
+        this.file = new File(parent, name + ".yml");
+        if (!this.file.exists()) {
+            try {
+                this.file.createNewFile();
+            } catch (IOException ex) {
+                Bukkit.getLogger().severe(
+                    "Filizer: Couldn't create file [" +
+                        name +
+                        "] in directory [" +
+                        parent.getPath() +
+                        "]."
+                );
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public boolean loadConfiguration() {
+        if (this.file == null || !this.file.exists()) return false;
+
+        this.config = YamlConfiguration.loadConfiguration(this.file);
+        return true;
     }
 
     public File getFile() {

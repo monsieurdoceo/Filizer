@@ -25,24 +25,8 @@ public class FileCreator {
             );
         }
 
-        File parent = new File(path);
-        if (!parent.exists()) {
-            if (!parent.mkdirs()) {
-                Bukkit.getLogger().severe(
-                    "Filizer: Failed to create directory [" +
-                        path +
-                        "]. Cannot initialize file."
-                );
-                return;
-            }
-        } else if (!parent.isDirectory()) {
-            Bukkit.getLogger().severe(
-                "Filizer: Path [" +
-                    path +
-                    "] is an existing file, not a directory. Cannot initialize file."
-            );
-            return;
-        }
+        File parent = FileManager.getInstance().searchFolder(path);
+        if (parent == null) return;
 
         createFile(parent, name);
     }

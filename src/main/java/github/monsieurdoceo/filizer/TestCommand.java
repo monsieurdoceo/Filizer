@@ -15,7 +15,7 @@ public class TestCommand implements BasicCommand {
 
     @Override
     public void execute(CommandSourceStack source, String[] args) {
-        FileManager fileManager = new FileManager();
+        FileManager fileManager = FileManager.getInstance();
         String name = args[0];
         CustomFile customFile = new CustomFile("plugins/Filizer", name);
         customFile

@@ -1,6 +1,5 @@
 package github.monsieurdoceo.filizer;
 
-import github.monsieurdoceo.filizer.TestCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FilizerPlugin extends JavaPlugin {
@@ -8,7 +7,9 @@ public class FilizerPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Filizer has been enabled!");
-        registerCommand("test", new TestCommand());
+        FileManager fileManager = FileManager.getInstance();
+
+        registerCommand("check", new TestCommand());
     }
 
     @Override

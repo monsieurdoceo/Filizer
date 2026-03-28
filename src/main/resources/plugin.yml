@@ -4,5 +4,5 @@ main: github.monsieurdoceo.filizer.FilizerPlugin
 api-version: 1.21.10
 authors: [MonsieurDoceo, TheSayko]
 commands:
-  test:
+  check:
     description: "This is a command"

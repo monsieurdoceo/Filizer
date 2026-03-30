@@ -1,13 +1,12 @@
-package github.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class FilizerPlugin extends JavaPlugin {
+public final class FilizerPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
         getLogger().info("Filizer has been enabled!");
-        FileManager fileManager = FileManager.getInstance();
 
         registerCommand("check", new TestCommand());
     }

@@ -1,4 +1,4 @@
-package github.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;

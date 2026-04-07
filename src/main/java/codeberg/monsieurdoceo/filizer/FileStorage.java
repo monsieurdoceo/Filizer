@@ -11,10 +11,6 @@ public final class FileStorage {
         this.customFiles = Lists.newArrayList();
     }
 
-    public void updateList(List<CustomFile> files) {
-        this.customFiles = files;
-    }
-
     public List<CustomFile> getFiles() {
         return this.customFiles;
     }

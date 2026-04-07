@@ -24,7 +24,6 @@ public final class FileManager {
         if (optionalFile.isPresent()) return;
 
         this.customFiles.add(new CustomFile(path, name));
-        this.fileStorage.updateList(this.customFiles);
     }
 
     public void createFile(String path, String name) {
@@ -41,7 +40,7 @@ public final class FileManager {
             .findAny();
     }
 
-    public FileStorage getFileStorage() {
-        return this.fileStorage;
+    public List<CustomFile> getFiles() {
+        return this.customFiles;
     }
 }

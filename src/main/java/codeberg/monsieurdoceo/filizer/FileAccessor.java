@@ -16,4 +16,8 @@ public final class FileAccessor {
     public static FileAccessor getInstance() {
         return instance == null ? instance = new FileAccessor() : instance;
     }
+
+    public List<CustomFile> getFiles() {
+        return this.customFiles;
+    }
 }

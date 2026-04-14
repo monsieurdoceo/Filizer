@@ -35,9 +35,9 @@ public class FileCreator {
         if (!checkingIfParentFileExists(parent)) return;
         if (!checkingIfFileNameCorrect(name)) return;
 
-        File file = new File(parent, name);
+        this.file = new File(parent, name);
         try {
-            file.createNewFile();
+            this.file.createNewFile();
         } catch (IOException ioException) {
             Bukkit.getLogger().severe(
                 "[Filizer]: Error when creating the file: " + ioException

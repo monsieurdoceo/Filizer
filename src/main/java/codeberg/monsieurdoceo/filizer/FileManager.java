@@ -7,40 +7,41 @@ import java.util.Optional;
 public final class FileManager {
 
     private static FileManager instance;
-    private List<CustomFile> customFiles;
     private FileStorage fileStorage;
 
     private FileManager() {
         this.fileStorage = new FileStorage();
-        this.customFiles = this.fileStorage.getFiles();
     }
 
     public static FileManager getInstance() {
         return instance == null ? instance = new FileManager() : instance;
     }
 
-    private void addFile(String path, String name) {
-        Optional<CustomFile> optionalFile = findFilebyName(name);
-        if (optionalFile.isPresent()) return;
-
-        this.customFiles.add(new CustomFile(path, name));
+    private CustomFile addFile(String path, String name) {
+        CustomFile customFile = new CustomFile(path, name);
+        this.fileStorage.add(customFile);
+        return customFile;
     }
 
-    public void createFile(String path, String name) {
-        addFile(path, name);
+    public CustomFile createFile(String path, String name) {
+        return addFile(path, name);
     }
 
-    public void createFile(File parent, String name) {
-        addFile(parent.getPath(), name);
+    public CustomFile createFile(File parent, String name) {
+        return addFile(parent.getPath(), name);
     }
 
-    public Optional<CustomFile> findFilebyName(String name) {
-        return this.customFiles.stream()
-            .filter(file -> file.getName().equalsIgnoreCase(name))
-            .findAny();
+    public void removeFile(String name) {
+        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
+            name
+        );
+        if (optionalFile.isEmpty()) return;
+
+        CustomFile customFile = optionalFile.get();
+        this.fileStorage.remove(customFile);
     }
 
     public List<CustomFile> getFiles() {
-        return this.customFiles;
+        return this.fileStorage.getFiles();
     }
 }

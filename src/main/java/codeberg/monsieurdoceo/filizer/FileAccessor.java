@@ -1,16 +1,22 @@
 package codeberg.monsieurdoceo.filizer;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class FileAccessor {
 
     private static FileAccessor instance;
-    private List<CustomFile> customFiles;
     private FileStorage fileStorage;
 
     private FileAccessor() {
         this.fileStorage = new FileStorage();
-        this.customFiles = this.fileStorage.getFiles();
+    }
+
+    private CustomFile findCustomFileByName(String name) {
+        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
+            name
+        );
+        return optionalFile.isPresent() ? optionalFile.get() : null;
     }
 
     public static FileAccessor getInstance() {
@@ -18,6 +24,11 @@ public final class FileAccessor {
     }
 
     public List<CustomFile> getFiles() {
-        return this.customFiles;
+        return this.fileStorage.getFiles();
+    }
+
+    public FileBuilder Builder(String name) {
+        CustomFile customFile = findCustomFileByName(name);
+        return new FileBuilder(customFile.Creator().getFile());
     }
 }

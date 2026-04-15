@@ -6,15 +6,10 @@ import java.util.Optional;
 
 public final class FileManager {
 
-    private static FileManager instance;
     private FileStorage fileStorage;
 
-    private FileManager() {
-        this.fileStorage = new FileStorage();
-    }
-
-    public static FileManager getInstance() {
-        return instance == null ? instance = new FileManager() : instance;
+    public FileManager() {
+        this.fileStorage = FileStorage.getInstance();
     }
 
     private CustomFile addFile(String path, String name) {
@@ -39,6 +34,17 @@ public final class FileManager {
 
         CustomFile customFile = optionalFile.get();
         this.fileStorage.remove(customFile);
+    }
+
+    public void storeAllFiles(File parent) {
+        if (!parent.exists()) parent.mkdir();
+
+        File[] files = parent.listFiles();
+        if (files == null) return;
+
+        for (File file : files) {
+            addFile(parent.getPath(), file.getName());
+        }
     }
 
     public List<CustomFile> getFiles() {

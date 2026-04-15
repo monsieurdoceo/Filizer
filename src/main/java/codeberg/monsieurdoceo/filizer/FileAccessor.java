@@ -5,11 +5,10 @@ import java.util.Optional;
 
 public final class FileAccessor {
 
-    private static FileAccessor instance;
     private FileStorage fileStorage;
 
-    private FileAccessor() {
-        this.fileStorage = new FileStorage();
+    public FileAccessor() {
+        this.fileStorage = FileStorage.getInstance();
     }
 
     private CustomFile findCustomFileByName(String name) {
@@ -19,16 +18,12 @@ public final class FileAccessor {
         return optionalFile.isPresent() ? optionalFile.get() : null;
     }
 
-    public static FileAccessor getInstance() {
-        return instance == null ? instance = new FileAccessor() : instance;
-    }
-
     public List<CustomFile> getFiles() {
         return this.fileStorage.getFiles();
     }
 
-    public FileBuilder Builder(String name) {
+    public FileGetter Access(String name) {
         CustomFile customFile = findCustomFileByName(name);
-        return new FileBuilder(customFile.Creator().getFile());
+        return new FileGetter(customFile.Creator().getFile());
     }
 }

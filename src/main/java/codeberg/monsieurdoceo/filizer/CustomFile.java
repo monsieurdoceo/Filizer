@@ -35,6 +35,10 @@ public class CustomFile {
         this.config.set(name, values);
     }
 
+    public void section(FileSection fileSection) {
+        fileSection.createSection(this.config);
+    }
+
     public String getName() {
         return this.name;
     }
@@ -47,7 +51,7 @@ public class CustomFile {
         try {
             this.config.save(this.file);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error couldn't save the file", e);
         }
     }
 }

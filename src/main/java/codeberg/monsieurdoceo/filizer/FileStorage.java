@@ -7,8 +7,9 @@ import java.util.Optional;
 public final class FileStorage {
 
     private List<CustomFile> customFiles;
+    private static FileStorage instance;
 
-    public FileStorage() {
+    private FileStorage() {
         this.customFiles = Lists.newArrayList();
     }
 
@@ -29,5 +30,9 @@ public final class FileStorage {
 
     public List<CustomFile> getFiles() {
         return this.customFiles;
+    }
+
+    public static FileStorage getInstance() {
+        return instance == null ? instance = new FileStorage() : instance;
     }
 }

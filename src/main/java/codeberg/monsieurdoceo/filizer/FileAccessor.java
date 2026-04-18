@@ -11,19 +11,17 @@ public final class FileAccessor {
         this.fileStorage = FileStorage.getInstance();
     }
 
-    private CustomFile findCustomFileByName(String name) {
-        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
-            name
-        );
-        return optionalFile.isPresent() ? optionalFile.get() : null;
-    }
-
     public List<CustomFile> getFiles() {
         return this.fileStorage.getFiles();
     }
 
     public FileGetter Access(String name) {
-        CustomFile customFile = findCustomFileByName(name);
+        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
+            name
+        );
+        if (optionalFile.isEmpty()) return null;
+
+        CustomFile customFile = optionalFile.get();
         return new FileGetter(customFile.Creator().getFile());
     }
 }

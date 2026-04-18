@@ -36,6 +36,10 @@ public final class FileManager {
         this.fileStorage.remove(customFile);
     }
 
+    public void removeFile(CustomFile customFile) {
+        this.fileStorage.remove(customFile);
+    }
+
     public void storeAllFiles(File parent) {
         if (!parent.exists()) parent.mkdir();
 
@@ -45,6 +49,20 @@ public final class FileManager {
         for (File file : files) {
             addFile(parent.getPath(), file.getName());
         }
+    }
+
+    public boolean deleteFile(String name) {
+        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
+            name
+        );
+        if (optionalFile.isEmpty()) return false;
+
+        CustomFile customFile = optionalFile.get();
+        return customFile.Creator().getFile().delete();
+    }
+
+    public boolean deleteFile(CustomFile customFile) {
+        return customFile.Creator().getFile().delete();
     }
 
     public List<CustomFile> getFiles() {

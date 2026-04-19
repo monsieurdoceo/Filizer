@@ -8,32 +8,9 @@ public class FileCreator {
 
     private File file;
 
-    private boolean checkingIfParentFileExists(File parent) {
-        if (parent.exists()) return true;
-        if (!parent.mkdirs()) {
-            Bukkit.getLogger().severe(
-                "[Filizer]: Error when creating the folder parent."
-            );
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean checkingIfFileNameCorrect(String name) {
-        if (name == null || name.isEmpty()) {
-            Bukkit.getLogger().severe(
-                "[Filizer]: The name of the file can't be null or empty."
-            );
-            return false;
-        }
-
-        return true;
-    }
-
     private void createFile(File parent, String name) {
-        if (!checkingIfParentFileExists(parent)) return;
-        if (!checkingIfFileNameCorrect(name)) return;
+        if (!FileChecker.checkingIfParentFileExists(parent)) return;
+        if (!FileChecker.checkingIfFileNameCorrect(name)) return;
 
         this.file = new File(parent, name);
         try {

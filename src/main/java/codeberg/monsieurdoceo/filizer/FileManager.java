@@ -14,6 +14,8 @@ public final class FileManager {
 
     private CustomFile addFile(String path, String name) {
         CustomFile customFile = new CustomFile(path, name);
+        customFile.save();
+
         this.fileStorage.add(customFile);
         return customFile;
     }

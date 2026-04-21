@@ -27,16 +27,19 @@ public class CustomFile {
         this.fileCreator = new FileCreator(parent, name);
     }
 
-    public void set(String name, Object value) {
+    public CustomFile set(String name, Object value) {
         this.config.set(name, value);
+        return this;
     }
 
-    public void list(String name, List<Object> values) {
+    public CustomFile list(String name, List<Object> values) {
         this.config.set(name, values);
+        return this;
     }
 
-    public void section(FileSection fileSection) {
+    public CustomFile section(FileSection fileSection) {
         fileSection.createSection(this.config);
+        return this;
     }
 
     public String getName() {

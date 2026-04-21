@@ -45,6 +45,10 @@ public class FileGetter {
         return section != null ? section.getKeys(deep) : Collections.emptySet();
     }
 
+    public boolean has(String path) {
+        return this.config.isSet(path);
+    }
+
     public File getFile() {
         return this.file;
     }

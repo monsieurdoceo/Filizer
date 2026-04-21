@@ -3,6 +3,7 @@ package codeberg.monsieurdoceo.filizer;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class TestCommand implements BasicCommand {
 
@@ -14,15 +15,21 @@ public class TestCommand implements BasicCommand {
 
     @Override
     public void execute(CommandSourceStack source, String[] args) {
-        if (args[0] == null || args[0].isEmpty()) {
-            Bukkit.getLogger().warning(
-                "[Filizer] The name cannot be null or empty."
-            );
-            return;
-        }
-
         String fileName = args[0];
         FileGetter fileGetter = this.fileAccessor.Access(fileName);
+
+        if (fileGetter.has("ranks")) {
+            for (String key : fileGetter.getKeys("ranks", false)) {
+                ConfigurationSection rankSection = fileGetter.getSection(
+                    "ranks." + key
+                );
+                int id = rankSection.getInt("id");
+                Bukkit.getLogger().info(
+                    "This file has a rank: " + key + " with the id: " + id
+                );
+            }
+        }
+
         Bukkit.getLogger().info(
             "The file has for variable name: " + fileGetter.getString("name")
         );

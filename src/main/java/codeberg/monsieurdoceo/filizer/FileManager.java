@@ -47,7 +47,8 @@ public final class FileManager {
         if (files == null) return;
 
         for (File file : files) {
-            addFile(parent.getPath(), file.getName());
+            if (file.isDirectory()) storeAllFiles(file);
+            else addFile(parent.getPath(), file.getName());
         }
     }
 

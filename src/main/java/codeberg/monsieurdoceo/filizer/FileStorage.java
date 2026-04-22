@@ -1,16 +1,16 @@
 package codeberg.monsieurdoceo.filizer;
 
-import com.google.common.collect.Lists;
-import java.util.List;
+import com.google.common.collect.Sets;
 import java.util.Optional;
+import java.util.Set;
 
 public final class FileStorage {
 
-    private List<CustomFile> customFiles;
+    private Set<CustomFile> customFiles;
     private static FileStorage instance;
 
     private FileStorage() {
-        this.customFiles = Lists.newArrayList();
+        this.customFiles = Sets.newHashSet();
     }
 
     public void add(CustomFile customFile) {
@@ -28,7 +28,7 @@ public final class FileStorage {
             .findAny();
     }
 
-    public List<CustomFile> getFiles() {
+    public Set<CustomFile> getFiles() {
         return this.customFiles;
     }
 

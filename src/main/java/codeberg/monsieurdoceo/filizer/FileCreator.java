@@ -2,6 +2,8 @@ package codeberg.monsieurdoceo.filizer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.bukkit.Bukkit;
 
 public class FileCreator {
@@ -9,15 +11,22 @@ public class FileCreator {
     private File file;
 
     private void createFile(File parent, String name) {
-        if (!FileChecker.checkingIfParentFileExists(parent)) return;
         if (!FileChecker.checkingIfFileNameCorrect(name)) return;
 
-        this.file = new File(parent, name);
+        Path filePath = parent.toPath().resolve(name);
         try {
-            this.file.createNewFile();
-        } catch (IOException ioException) {
+            if (Files.exists(filePath.getParent())) Files.createDirectories(
+                filePath.getParent()
+            );
+            if (Files.notExists(filePath)) Files.createFile(filePath);
+
+            this.file = filePath.toFile();
+        } catch (IOException e) {
             Bukkit.getLogger().severe(
-                "[Filizer]: Error when creating the file: " + ioException
+                "[Filizer]: Critical I/O error for " +
+                    name +
+                    ": " +
+                    e.getMessage()
             );
         }
     }

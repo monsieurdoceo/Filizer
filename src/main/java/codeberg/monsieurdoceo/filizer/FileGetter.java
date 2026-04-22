@@ -38,6 +38,10 @@ public class FileGetter {
         return this.config.getConfigurationSection(path);
     }
 
+    public Set<String> getKeys(boolean deep) {
+        return this.config.getKeys(deep);
+    }
+
     public Set<String> getKeys(String path, boolean deep) {
         ConfigurationSection section = (path == null || path.isEmpty())
             ? this.config

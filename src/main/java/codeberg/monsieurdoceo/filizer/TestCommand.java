@@ -3,7 +3,7 @@ package codeberg.monsieurdoceo.filizer;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemorySection;
 
 public class TestCommand implements BasicCommand {
 
@@ -18,20 +18,16 @@ public class TestCommand implements BasicCommand {
         String fileName = args[0];
         FileGetter fileGetter = this.fileAccessor.Access(fileName);
 
-        if (fileGetter.has("ranks")) {
-            for (String key : fileGetter.getKeys("ranks", false)) {
-                ConfigurationSection rankSection = fileGetter.getSection(
-                    "ranks." + key
-                );
-                int id = rankSection.getInt("id");
+        for (String key : fileGetter.getKeys(true)) {
+            Object object = fileGetter.get(key);
+            if (!(object instanceof MemorySection)) {
                 Bukkit.getLogger().info(
-                    "This file has a rank: " + key + " with the id: " + id
+                    "The file contain key: " +
+                        key +
+                        " with the value: " +
+                        object
                 );
             }
         }
-
-        Bukkit.getLogger().info(
-            "The file has for variable name: " + fileGetter.getString("name")
-        );
     }
 }

@@ -1,7 +1,7 @@
 package codeberg.monsieurdoceo.filizer;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public final class FileAccessor {
 
@@ -11,7 +11,7 @@ public final class FileAccessor {
         this.fileStorage = FileStorage.getInstance();
     }
 
-    public List<CustomFile> getFiles() {
+    public Set<CustomFile> getFiles() {
         return this.fileStorage.getFiles();
     }
 

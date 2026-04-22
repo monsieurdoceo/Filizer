@@ -14,6 +14,8 @@ public class CustomFile {
     private File file;
     private FileConfiguration config;
 
+    private FileGetter fileGetter;
+
     public CustomFile(String path, String name) {
         this.name = name;
         this.fileCreator = new FileCreator(path, name);
@@ -54,7 +56,13 @@ public class CustomFile {
         try {
             this.config.save(this.file);
         } catch (IOException e) {
-            throw new RuntimeException("Error couldn't save the file", e);
+            e.printStackTrace();
         }
+    }
+
+    public FileGetter getFileGetter() {
+        return (this.fileGetter == null)
+            ? this.fileGetter = new FileGetter(Creator().getFile())
+            : this.fileGetter;
     }
 }

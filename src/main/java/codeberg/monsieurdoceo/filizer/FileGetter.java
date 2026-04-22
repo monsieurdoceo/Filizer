@@ -43,14 +43,18 @@ public class FileGetter {
     }
 
     public Set<String> getKeys(String path, boolean deep) {
-        ConfigurationSection section = (path == null || path.isEmpty())
-            ? this.config
-            : getSection(path);
-        return section != null ? section.getKeys(deep) : Collections.emptySet();
+        if (path == null || path.isEmpty()) return getKeys(deep);
+
+        ConfigurationSection section = this.config.getConfigurationSection(
+            path
+        );
+        return (section != null)
+            ? section.getKeys(deep)
+            : Collections.emptySet();
     }
 
     public boolean has(String path) {
-        return this.config.isSet(path);
+        return this.config.contains(path);
     }
 
     public File getFile() {

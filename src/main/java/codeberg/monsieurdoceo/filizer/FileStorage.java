@@ -1,38 +1,39 @@
 package codeberg.monsieurdoceo.filizer;
 
-import com.google.common.collect.Sets;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class FileStorage {
 
-    private Set<CustomFile> customFiles;
-    private static FileStorage instance;
-
-    private FileStorage() {
-        this.customFiles = Sets.newHashSet();
-    }
+    private final Map<String, CustomFile> customFiles =
+        new ConcurrentHashMap<>();
+    private static final FileStorage instance = new FileStorage();
 
     public void add(CustomFile customFile) {
-        this.customFiles.add(customFile);
+        this.customFiles.put(customFile.getName(), customFile);
+    }
+
+    public void remove(String name) {
+        this.customFiles.remove(name);
     }
 
     public void remove(CustomFile customFile) {
-        this.customFiles.remove(customFile);
+        if (customFile != null) this.customFiles.remove(customFile.getName());
     }
 
     public Optional<CustomFile> findFilebyName(String name) {
-        return getFiles()
-            .stream()
-            .filter(file -> file.getName().equalsIgnoreCase(name))
-            .findAny();
+        return (name != null)
+            ? Optional.ofNullable(this.customFiles.get(name))
+            : Optional.empty();
     }
 
-    public Set<CustomFile> getFiles() {
-        return this.customFiles;
+    public Collection<CustomFile> getFiles() {
+        return this.customFiles.values();
     }
 
     public static FileStorage getInstance() {
-        return instance == null ? instance = new FileStorage() : instance;
+        return instance;
     }
 }

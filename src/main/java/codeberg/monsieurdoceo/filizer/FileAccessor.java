@@ -1,27 +1,12 @@
 package codeberg.monsieurdoceo.filizer;
 
-import java.util.Optional;
-import java.util.Set;
-
 public final class FileAccessor {
 
-    private FileStorage fileStorage;
-
-    public FileAccessor() {
-        this.fileStorage = FileStorage.getInstance();
-    }
-
-    public Set<CustomFile> getFiles() {
-        return this.fileStorage.getFiles();
-    }
+    private final FileStorage fileStorage = FileStorage.getInstance();
 
     public FileGetter Access(String name) {
-        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
-            name
-        );
-        if (optionalFile.isEmpty()) return null;
-
-        CustomFile customFile = optionalFile.get();
-        return new FileGetter(customFile.Creator().getFile());
+        return this.fileStorage.findFilebyName(name)
+            .map(CustomFile::getFileGetter)
+            .orElse(null);
     }
 }

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 
@@ -34,13 +32,7 @@ public final class FileManager {
     }
 
     public void removeFile(String name) {
-        Optional<CustomFile> optionalFile = this.fileStorage.findFilebyName(
-            name
-        );
-        if (optionalFile.isEmpty()) return;
-
-        CustomFile customFile = optionalFile.get();
-        this.fileStorage.remove(customFile);
+        this.fileStorage.remove(name);
     }
 
     public void removeFile(CustomFile customFile) {
@@ -88,9 +80,5 @@ public final class FileManager {
             );
         }
         return false;
-    }
-
-    public Set<CustomFile> getFiles() {
-        return this.fileStorage.getFiles();
     }
 }

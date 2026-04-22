@@ -6,16 +6,15 @@ import java.util.List;
 import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class FileGetter {
 
     private File file;
     private FileConfiguration config;
 
-    public FileGetter(File file) {
+    public FileGetter(File file, FileConfiguration config) {
         this.file = file;
-        this.config = YamlConfiguration.loadConfiguration(file);
+        this.config = config;
     }
 
     public Object get(String path) {

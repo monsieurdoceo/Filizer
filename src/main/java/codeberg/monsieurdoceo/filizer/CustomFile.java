@@ -15,18 +15,22 @@ public class CustomFile {
     private FileConfiguration config;
 
     private FileGetter fileGetter;
+    private long lastModified;
 
     public CustomFile(String path, String name) {
         this.name = name;
         this.fileCreator = new FileCreator(path, name);
 
         this.file = this.fileCreator.getFile();
-        this.config = YamlConfiguration.loadConfiguration(this.file);
+        reload();
     }
 
     public CustomFile(File parent, String name) {
         this.name = name;
         this.fileCreator = new FileCreator(parent, name);
+
+        this.file = this.fileCreator.getFile();
+        reload();
     }
 
     public CustomFile set(String name, Object value) {
@@ -55,14 +59,23 @@ public class CustomFile {
     public void save() {
         try {
             this.config.save(this.file);
+            this.lastModified = this.file.lastModified();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public FileGetter getFileGetter() {
-        return (this.fileGetter == null)
-            ? this.fileGetter = new FileGetter(Creator().getFile())
-            : this.fileGetter;
+        long currentTime = this.file.lastModified();
+        if (currentTime > this.lastModified) reload();
+
+        return this.fileGetter;
+    }
+
+    public void reload() {
+        this.config = YamlConfiguration.loadConfiguration(this.file);
+        this.fileGetter = new FileGetter(this.file, this.config);
+
+        this.lastModified = this.file.lastModified();
     }
 }

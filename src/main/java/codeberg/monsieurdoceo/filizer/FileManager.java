@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 
@@ -15,20 +16,18 @@ public final class FileManager {
         this.fileStorage = FileStorage.getInstance();
     }
 
-    private CustomFile addFile(String path, String name) {
+    private CustomFile addFile(Path path, String name) {
         CustomFile customFile = new CustomFile(path, name);
-        customFile.save();
-
         this.fileStorage.add(customFile);
         return customFile;
     }
 
     public CustomFile createFile(String path, String name) {
-        return addFile(path, name);
+        return addFile(Paths.get(path), name);
     }
 
     public CustomFile createFile(File parent, String name) {
-        return addFile(parent.getPath(), name);
+        return addFile(parent.toPath(), name);
     }
 
     public void removeFile(String name) {
@@ -46,10 +45,7 @@ public final class FileManager {
             paths
                 .filter(Files::isRegularFile)
                 .forEach(path -> {
-                    addFile(
-                        path.getParent().toString(),
-                        path.getFileName().toString()
-                    );
+                    addFile(path.getParent(), path.getFileName().toString());
                 });
         }
     }
@@ -65,7 +61,7 @@ public final class FileManager {
         if (customFile == null) return false;
 
         try {
-            Path path = customFile.Creator().getFile().toPath();
+            Path path = customFile.getFile().toPath();
             boolean wasDeleted = Files.deleteIfExists(path);
             if (wasDeleted) {
                 removeFile(customFile);
@@ -80,5 +76,9 @@ public final class FileManager {
             );
         }
         return false;
+    }
+
+    public FileStorage gFileStorage() {
+        return this.fileStorage;
     }
 }

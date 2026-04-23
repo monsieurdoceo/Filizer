@@ -10,12 +10,12 @@ public class FileCreator {
 
     private File file;
 
-    private void createFile(File parent, String name) {
+    private void createFile(Path path, String name) {
         if (!FileChecker.checkingIfFileNameCorrect(name)) return;
 
-        Path filePath = parent.toPath().resolve(name);
+        Path filePath = path.resolve(name);
         try {
-            if (Files.exists(filePath.getParent())) Files.createDirectories(
+            if (Files.notExists(filePath.getParent())) Files.createDirectories(
                 filePath.getParent()
             );
             if (Files.notExists(filePath)) Files.createFile(filePath);
@@ -31,13 +31,12 @@ public class FileCreator {
         }
     }
 
-    public FileCreator(String path, String name) {
-        File parent = new File(path);
-        createFile(parent, name);
+    public FileCreator(Path path, String name) {
+        createFile(path, name);
     }
 
     public FileCreator(File parent, String name) {
-        createFile(parent, name);
+        createFile(parent.toPath(), name);
     }
 
     public File getFile() {

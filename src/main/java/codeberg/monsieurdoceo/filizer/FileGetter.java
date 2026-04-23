@@ -1,6 +1,5 @@
 package codeberg.monsieurdoceo.filizer;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -9,11 +8,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class FileGetter {
 
-    private File file;
     private FileConfiguration config;
 
-    public FileGetter(File file, FileConfiguration config) {
-        this.file = file;
+    public FileGetter(FileConfiguration config) {
         this.config = config;
     }
 
@@ -54,13 +51,5 @@ public class FileGetter {
 
     public boolean has(String path) {
         return this.config.contains(path);
-    }
-
-    public File getFile() {
-        return this.file;
-    }
-
-    public FileConfiguration getConfig() {
-        return this.config;
     }
 }

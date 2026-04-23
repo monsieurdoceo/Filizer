@@ -1,8 +1,9 @@
 package codeberg.monsieurdoceo.filizer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.MemorySection;
 
-public class FileChecker {
+public final class FileChecker {
 
     public static boolean checkingIfFileNameCorrect(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -13,5 +14,23 @@ public class FileChecker {
         }
 
         return true;
+    }
+
+    public static void viewFileContents(
+        FileAccessor fileAccessor,
+        String name
+    ) {
+        FileGetter fileGetter = fileAccessor.Access(name);
+        for (String key : fileGetter.getKeys(true)) {
+            Object object = fileGetter.get(key);
+            if (!(object instanceof MemorySection)) {
+                Bukkit.getLogger().info(
+                    "The file contain key: " +
+                        key +
+                        " with the value: " +
+                        object
+                );
+            }
+        }
     }
 }

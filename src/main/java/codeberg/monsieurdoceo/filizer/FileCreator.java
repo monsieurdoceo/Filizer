@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.bukkit.Bukkit;
 
-public class FileCreator {
+public final class FileCreator {
 
     private File file;
 
@@ -15,10 +15,12 @@ public class FileCreator {
 
         Path filePath = path.resolve(name);
         try {
-            if (Files.notExists(filePath.getParent())) Files.createDirectories(
-                filePath.getParent()
+            if (
+                !FileChecker.checkingIfFileExist(filePath.getParent())
+            ) Files.createDirectories(filePath.getParent());
+            if (!FileChecker.checkingIfFileExist(filePath)) Files.createFile(
+                filePath
             );
-            if (Files.notExists(filePath)) Files.createFile(filePath);
 
             this.file = filePath.toFile();
         } catch (IOException e) {

@@ -1,7 +1,8 @@
 package codeberg.monsieurdoceo.filizer;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.MemorySection;
 
 public final class FileChecker {
 
@@ -16,21 +17,7 @@ public final class FileChecker {
         return true;
     }
 
-    public static void viewFileContents(
-        FileAccessor fileAccessor,
-        String name
-    ) {
-        FileGetter fileGetter = fileAccessor.Access(name);
-        for (String key : fileGetter.getKeys(true)) {
-            Object object = fileGetter.get(key);
-            if (!(object instanceof MemorySection)) {
-                Bukkit.getLogger().info(
-                    "The file contain key: " +
-                        key +
-                        " with the value: " +
-                        object
-                );
-            }
-        }
+    public static boolean checkingIfFileExist(Path path) {
+        return Files.exists(path);
     }
 }

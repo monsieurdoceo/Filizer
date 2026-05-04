@@ -39,7 +39,7 @@ public class FileGetter {
     }
 
     public Set<String> getKeys(String path, boolean deep) {
-        if (path == null || path.isEmpty()) return getKeys(deep);
+        if (path == null || path.isEmpty() || !has(path)) return getKeys(deep);
 
         ConfigurationSection section = this.config.getConfigurationSection(
             path

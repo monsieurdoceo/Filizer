@@ -78,7 +78,7 @@ public final class FileManager {
         return false;
     }
 
-    public FileStorage gFileStorage() {
+    public FileStorage getFileStorage() {
         return this.fileStorage;
     }
 }

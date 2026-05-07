@@ -1,5 +1,6 @@
 package codeberg.monsieurdoceo.filizer;
 
+import codeberg.monsieurdoceo.filizer.managers.FileManager;
 import java.io.IOException;
 import org.bukkit.plugin.java.JavaPlugin;
 

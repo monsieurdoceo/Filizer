@@ -1,5 +1,8 @@
 package codeberg.monsieurdoceo.filizer;
 
+import codeberg.monsieurdoceo.filizer.managers.FileAccessor;
+import codeberg.monsieurdoceo.filizer.managers.FileManager;
+import codeberg.monsieurdoceo.filizer.utilities.FileGetter;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;

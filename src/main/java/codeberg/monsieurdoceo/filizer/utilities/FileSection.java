@@ -1,4 +1,4 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.utilities;
 
 import com.google.common.collect.Maps;
 import java.util.Map;

@@ -1,5 +1,6 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.managers;
 
+import codeberg.monsieurdoceo.filizer.objects.CustomFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,8 +63,7 @@ public final class FileManager {
 
         try {
             Path path = customFile.getFile().toPath();
-            boolean wasDeleted = Files.deleteIfExists(path);
-            if (wasDeleted) {
+            if (Files.deleteIfExists(path)) {
                 removeFile(customFile);
                 return true;
             }

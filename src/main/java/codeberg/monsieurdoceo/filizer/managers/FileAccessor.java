@@ -1,4 +1,7 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.managers;
+
+import codeberg.monsieurdoceo.filizer.objects.CustomFile;
+import codeberg.monsieurdoceo.filizer.utilities.FileGetter;
 
 public final class FileAccessor {
 

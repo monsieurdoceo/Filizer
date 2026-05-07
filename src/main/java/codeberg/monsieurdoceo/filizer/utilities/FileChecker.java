@@ -1,4 +1,4 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.utilities;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

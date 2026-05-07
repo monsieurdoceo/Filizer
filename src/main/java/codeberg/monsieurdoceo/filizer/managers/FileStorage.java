@@ -1,5 +1,6 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.managers;
 
+import codeberg.monsieurdoceo.filizer.objects.CustomFile;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.utilities;
 
 import java.util.Collections;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class FileGetter {
+public final class FileGetter {
 
     private FileConfiguration config;
 

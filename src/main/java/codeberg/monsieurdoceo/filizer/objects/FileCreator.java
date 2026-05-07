@@ -1,5 +1,6 @@
-package codeberg.monsieurdoceo.filizer;
+package codeberg.monsieurdoceo.filizer.objects;
 
+import codeberg.monsieurdoceo.filizer.utilities.FileChecker;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

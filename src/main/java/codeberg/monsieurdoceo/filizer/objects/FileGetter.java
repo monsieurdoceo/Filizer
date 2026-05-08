@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public final class FileGetter {
 
-    private FileConfiguration config;
+    private final FileConfiguration config;
 
     public FileGetter(FileConfiguration config) {
         this.config = config;

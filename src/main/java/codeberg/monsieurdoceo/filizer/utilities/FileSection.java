@@ -6,7 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class FileSection {
 
-    private String name;
+    private final String name;
     private Map<String, Object> data;
 
     public FileSection(String name) {
@@ -16,6 +16,11 @@ public class FileSection {
 
     public FileSection set(String name, Object value) {
         this.data.put(name, value);
+        return this;
+    }
+
+    public FileSection section(Map<String, Object> data) {
+        this.data = data;
         return this;
     }
 

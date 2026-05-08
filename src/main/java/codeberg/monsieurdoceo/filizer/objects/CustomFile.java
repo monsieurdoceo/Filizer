@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class CustomFile {
 
-    private String name;
+    private final String name;
 
     private File file;
     private FileConfiguration config;

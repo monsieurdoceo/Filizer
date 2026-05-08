@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 
 public final class FileManager {
 
-    private FileStorage fileStorage;
+    private final FileStorage fileStorage;
 
     public FileManager() {
         this.fileStorage = FileStorage.getInstance();

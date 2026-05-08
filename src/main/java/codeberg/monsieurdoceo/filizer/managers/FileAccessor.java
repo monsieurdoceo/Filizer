@@ -14,7 +14,7 @@ public final class FileAccessor {
      * @param name File name
      * @return Optional containing the fileGetter if found
      */
-    public Optional<FileGetter> access(String name) {
+    public Optional<FileGetter> access(final String name) {
         return (FileChecker.checkingIfFileNameCorrect(name))
             ? this.fileStorage.findFilebyName(name).map(
                   CustomFile::getFileGetter
@@ -22,7 +22,12 @@ public final class FileAccessor {
             : Optional.empty();
     }
 
-    public FileGetter require(final String name) {
+    /**
+     * Retrieves a FileGetter by the file name (the strict mode)
+     * @param name File name
+     * @return The fileGetter or throw an IllegalArgumentException
+     */
+    public FileGetter require(String name) {
         return access(name).orElseThrow(() ->
             new IllegalArgumentException("[Filizer] File not found: " + name)
         );

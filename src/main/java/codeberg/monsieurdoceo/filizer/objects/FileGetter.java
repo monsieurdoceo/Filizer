@@ -1,4 +1,4 @@
-package codeberg.monsieurdoceo.filizer.utilities;
+package codeberg.monsieurdoceo.filizer.objects;
 
 import java.util.Collections;
 import java.util.List;

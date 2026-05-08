@@ -2,7 +2,6 @@ package codeberg.monsieurdoceo.filizer;
 
 import codeberg.monsieurdoceo.filizer.managers.FileAccessor;
 import codeberg.monsieurdoceo.filizer.managers.FileManager;
-import codeberg.monsieurdoceo.filizer.utilities.FileGetter;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.Bukkit;
@@ -25,17 +24,18 @@ public class TestCommand implements BasicCommand {
                 .save();
         }
 
-        FileGetter fileGetter = this.fileAccessor.Access(fileName);
-        for (String key : fileGetter.getKeys(true)) {
-            Object object = fileGetter.get(key);
-            if (!(object instanceof MemorySection)) {
-                Bukkit.getLogger().info(
-                    "The file contain key: " +
-                        key +
-                        " with the value: " +
-                        object
-                );
+        this.fileAccessor.access(fileName).ifPresent(fileGetter -> {
+            for (String key : fileGetter.getKeys(true)) {
+                Object object = fileGetter.get(key);
+                if (!(object instanceof MemorySection)) {
+                    Bukkit.getLogger().info(
+                        "The file contain key: " +
+                            key +
+                            " with the value: " +
+                            object
+                    );
+                }
             }
-        }
+        });
     }
 }

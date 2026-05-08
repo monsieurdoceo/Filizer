@@ -1,6 +1,7 @@
 package codeberg.monsieurdoceo.filizer.managers;
 
 import codeberg.monsieurdoceo.filizer.objects.CustomFile;
+import codeberg.monsieurdoceo.filizer.utilities.FileChecker;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public final class FileStorage {
     }
 
     public Optional<CustomFile> findFilebyName(String name) {
-        return (name != null)
+        return (FileChecker.checkingIfFileNameCorrect(name))
             ? Optional.ofNullable(this.customFiles.get(name))
             : Optional.empty();
     }

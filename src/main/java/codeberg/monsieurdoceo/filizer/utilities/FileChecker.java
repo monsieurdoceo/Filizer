@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 
 public final class FileChecker {
 
-    public static boolean checkingIfFileNameCorrect(String name) {
+    public static boolean hasValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
             Bukkit.getLogger().severe(
-                "[Filizer]: The name of the file can't be null or empty."
+                "[Filizer] The name of the file can't be null or empty."
             );
             return false;
         }
@@ -17,7 +17,7 @@ public final class FileChecker {
         return true;
     }
 
-    public static boolean checkingIfFileExist(Path path) {
+    public static boolean checkIfFileExist(Path path) {
         return Files.exists(path);
     }
 }

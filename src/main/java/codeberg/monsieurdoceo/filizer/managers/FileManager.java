@@ -17,16 +17,44 @@ public final class FileManager {
         this.fileStorage = FileStorage.getInstance();
     }
 
+    /**
+     * Checks whether a file with the given name exists in storage.
+     *
+     * @param name name of the file to search for
+     * @return {@code true} if the file exists, {@code false} otherwise
+     */
+    public boolean containsFile(String name) {
+        return this.fileStorage.findFileByName(name)
+            .map(customFile -> this.fileStorage.contains(customFile))
+            .isPresent();
+    }
+
     private CustomFile addFile(Path path, String name) {
         CustomFile customFile = new CustomFile(path, name);
         this.fileStorage.add(customFile);
         return customFile;
     }
 
+    /**
+     * Create a newly file within a parent file by a {@code String} path
+     * and the {@code String} name.
+     *
+     * @param path path of the parent file to store
+     * @param name name of the file to create
+     * @return a newly created {@link CustomFile}
+     */
     public CustomFile createFile(String path, String name) {
         return addFile(Paths.get(path), name);
     }
 
+    /**
+     * Create a newly file within a {@link File} parent and
+     * the {@code String} name.
+     *
+     * @param path path of the parent file to store
+     * @param name name of the file to create
+     * @return a newly created {@link CustomFile}
+     */
     public CustomFile createFile(File parent, String name) {
         return addFile(parent.toPath(), name);
     }
@@ -52,7 +80,7 @@ public final class FileManager {
     }
 
     public boolean deleteFile(String name) {
-        CustomFile customFile = this.fileStorage.findFilebyName(name).orElse(
+        CustomFile customFile = this.fileStorage.findFileByName(name).orElse(
             null
         );
         return customFile != null && deleteFile(customFile);
@@ -69,7 +97,7 @@ public final class FileManager {
             }
         } catch (IOException e) {
             Bukkit.getLogger().severe(
-                "[Filizer]: IO Error deleting " +
+                "[Filizer] IO Error deleting " +
                     customFile.getName() +
                     ": " +
                     e.getMessage()

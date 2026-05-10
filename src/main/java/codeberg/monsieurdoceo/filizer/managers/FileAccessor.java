@@ -10,24 +10,35 @@ public final class FileAccessor {
     private final FileStorage fileStorage = FileStorage.getInstance();
 
     /**
-     * Retrieves a FileGetter by the file name
-     * @param name File name
-     * @return Optional containing the fileGetter if found
+     * Attempts to retrieve the {@link FileGetter} associated with a file name.
+     *
+     * <p>If the provided file name is invalid or no matching file exists,
+     * an empty {@link Optional} is returned.
+     *
+     * @param name the file name to search for
+     * @return an {@link Optional} containing the matching file getter,
+     *         or an empty Optional if no match exists
      */
     public Optional<FileGetter> access(final String name) {
-        return (FileChecker.checkingIfFileNameCorrect(name))
-            ? this.fileStorage.findFilebyName(name).map(
+        return (FileChecker.hasValidName(name))
+            ? this.fileStorage.findFileByName(name).map(
                   CustomFile::getFileGetter
               )
             : Optional.empty();
     }
 
     /**
-     * Retrieves a FileGetter by the file name (the strict mode)
-     * @param name File name
-     * @return The fileGetter or throw an IllegalArgumentException
+     * Retrieves the {@link FileGetter} associated with a file name.
+     *
+     * <p>This method behaves like {@link #access(String)} but throws an
+     * {@link IllegalArgumentException} if the file cannot be resolved.
+     *
+     * @param name the file name to search for
+     * @return the matching file getter
+     * @throws IllegalArgumentException if the file name is invalid
+     *                                  or no matching file exists
      */
-    public FileGetter require(String name) {
+    public FileGetter require(final String name) {
         return access(name).orElseThrow(() ->
             new IllegalArgumentException("[Filizer] File not found: " + name)
         );

@@ -12,21 +12,21 @@ public final class FileCreator {
     private File file;
 
     private void createFile(Path path, String name) {
-        if (!FileChecker.checkingIfFileNameCorrect(name)) return;
+        if (!FileChecker.hasValidName(name)) return;
 
         Path filePath = path.resolve(name);
         try {
             if (
-                !FileChecker.checkingIfFileExist(filePath.getParent())
+                !FileChecker.checkIfFileExist(filePath.getParent())
             ) Files.createDirectories(filePath.getParent());
-            if (!FileChecker.checkingIfFileExist(filePath)) Files.createFile(
+            if (!FileChecker.checkIfFileExist(filePath)) Files.createFile(
                 filePath
             );
 
             this.file = filePath.toFile();
         } catch (IOException e) {
             Bukkit.getLogger().severe(
-                "[Filizer]: Critical I/O error for " +
+                "[Filizer] Critical I/O error for " +
                     name +
                     ": " +
                     e.getMessage()

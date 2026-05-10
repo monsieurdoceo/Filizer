@@ -13,7 +13,13 @@ public final class FileStorage {
         new ConcurrentHashMap<>();
     private static final FileStorage instance = new FileStorage();
 
+    public boolean contains(CustomFile customFile) {
+        return this.customFiles.containsValue(customFile);
+    }
+
     public void add(CustomFile customFile) {
+        if (contains(customFile)) return;
+
         this.customFiles.put(customFile.getName(), customFile);
     }
 
@@ -25,8 +31,8 @@ public final class FileStorage {
         if (customFile != null) this.customFiles.remove(customFile.getName());
     }
 
-    public Optional<CustomFile> findFilebyName(String name) {
-        return (FileChecker.checkingIfFileNameCorrect(name))
+    public Optional<CustomFile> findFileByName(String name) {
+        return (FileChecker.hasValidName(name))
             ? Optional.ofNullable(this.customFiles.get(name))
             : Optional.empty();
     }

@@ -20,7 +20,7 @@ public final class FileManager {
     /**
      * Checks whether a file with the given name exists in storage.
      *
-     * @param name name of the file to search for
+     * @param name of the file to search for
      * @return {@code true} if the file exists, {@code false} otherwise
      */
     public boolean containsFile(String name) {
@@ -36,11 +36,11 @@ public final class FileManager {
     }
 
     /**
-     * Create a newly file within a parent file by a {@code String} path
-     * and the {@code String} name.
+     * Create a newly file within a parent file by a path
+     * and the name.
      *
-     * @param path path of the parent file to store
-     * @param name name of the file to create
+     * @param path of the parent file to store
+     * @param name of the file to create
      * @return a newly created {@link CustomFile}
      */
     public CustomFile createFile(String path, String name) {
@@ -48,25 +48,49 @@ public final class FileManager {
     }
 
     /**
-     * Create a newly file within a {@link File} parent and
-     * the {@code String} name.
+     * Create a newly file within a parent file and
+     * the name.
      *
-     * @param path path of the parent file to store
-     * @param name name of the file to create
+     * <p>This method behaves like {@code createFile} but the parent file is a {@link File}.
+     *
+     * @param path of the parent file to store
+     * @param name of the file to create
      * @return a newly created {@link CustomFile}
      */
     public CustomFile createFile(File parent, String name) {
         return addFile(parent.toPath(), name);
     }
 
+    /**
+    * Remove a {@link CustomFile} from the list by this name.
+    *
+    * @param name of the file to delete
+ */
     public void removeFile(String name) {
         this.fileStorage.remove(name);
     }
 
+    /**
+    * Directly remove the {@link CustomFile} from the list.
+    *
+    * <p>This method behaves like {@link #removeFile(String)}
+    * but directly get the {@link CustomFile}.
+    *
+    * @param customFile containing the information of the file
+ */
     public void removeFile(CustomFile customFile) {
         this.fileStorage.remove(customFile);
     }
 
+    /**
+    * Retrieves the {@code File} from the {@code Path} given.
+    *
+    * <p>If {@code File} has been found through a filter to gather only files,
+    * then it will store all of them in the list.
+    *
+    * @param root of a file path
+    * @throws IOException if the files are null or cannot be stored
+ */
     public void storeAllFiles(Path root) throws IOException {
         if (Files.notExists(root)) Files.createDirectories(root);
 

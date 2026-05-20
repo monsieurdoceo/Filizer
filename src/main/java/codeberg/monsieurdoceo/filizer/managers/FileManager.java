@@ -103,6 +103,12 @@ public final class FileManager {
         }
     }
 
+    /**
+    * Delete the {@link CustomFile} based on the given name.
+    *
+    * @param name of the file
+    * @return {@code true} if the file has been deleted otherwise {@code false}
+ */
     public boolean deleteFile(String name) {
         CustomFile customFile = this.fileStorage.findFileByName(name).orElse(
             null
@@ -110,6 +116,15 @@ public final class FileManager {
         return customFile != null && deleteFile(customFile);
     }
 
+    /**
+    * Delete the {@link CustomFile} based on the given name.
+    *
+    * <p>This method behaves like {@link #deleteFile(String)} but check if the {@link CustomFile}
+    * is null and remove it from the list.
+    *
+    * @param customFile containing the information of the file
+    * @return {@code true} if the file has been deleted otherwise {@code false}
+ */
     public boolean deleteFile(CustomFile customFile) {
         if (customFile == null) return false;
 

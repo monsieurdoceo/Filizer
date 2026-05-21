@@ -12,7 +12,7 @@ public final class FileAccessor {
     /**
      * Attempts to retrieve the {@link FileGetter} associated with a file name.
      *
-     * <p>If the provided file name is invalid or no matching file exists,
+     * <p>If the provided file name is invalid or cannot be resolved,
      * an empty {@link Optional} is returned.
      *
      * @param name the file name to search for
@@ -28,7 +28,7 @@ public final class FileAccessor {
     }
 
     /**
-     * Retrieves the {@link FileGetter} associated with a file name.
+     * Resolves the {@link FileGetter} associated with a file name.
      *
      * <p>This method behaves like {@link #access(String)} but throws an
      * {@link IllegalArgumentException} if the file cannot be resolved.

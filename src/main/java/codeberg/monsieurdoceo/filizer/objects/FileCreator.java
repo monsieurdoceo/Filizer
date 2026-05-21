@@ -5,44 +5,43 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.bukkit.Bukkit;
 
+/**
+ * Utility class for creating physical files on disk.
+ */
 public final class FileCreator {
 
-    private File file;
-
-    private void createFile(Path path, String name) {
-        if (!FileChecker.hasValidName(name)) return;
+    /**
+    * Creates a file from a parent directory path and file name.
+    *
+    * <p>If the parent directories do not exist,
+    * they are created automatically.
+    *
+    * @param path the parent directory path
+    * @param name the file name
+    * @return the created file
+    * @throws IllegalArgumentException if the file name is invalid
+    * @throws IllegalStateException if an I/O error occurs while creating the file
+*/
+    public static File createFile(Path path, String name) {
+        if (!FileChecker.hasValidName(name)) {
+            throw new IllegalArgumentException(
+                "[Filizer] Invalid file name: " + name
+            );
+        }
 
         Path filePath = path.resolve(name);
         try {
             if (
-                !FileChecker.checkIfFileExist(filePath.getParent())
+                !FileChecker.checkIfFileExists(filePath.getParent())
             ) Files.createDirectories(filePath.getParent());
-            if (!FileChecker.checkIfFileExist(filePath)) Files.createFile(
+            if (!FileChecker.checkIfFileExists(filePath)) Files.createFile(
                 filePath
             );
 
-            this.file = filePath.toFile();
+            return filePath.toFile();
         } catch (IOException e) {
-            Bukkit.getLogger().severe(
-                "[Filizer] Critical I/O error for " +
-                    name +
-                    ": " +
-                    e.getMessage()
-            );
+            throw new IllegalStateException("[Filizer] Critical I/O error for " + name, e);
         }
-    }
-
-    public FileCreator(Path path, String name) {
-        createFile(path, name);
-    }
-
-    public FileCreator(File parent, String name) {
-        createFile(parent.toPath(), name);
-    }
-
-    public File getFile() {
-        return this.file;
     }
 }

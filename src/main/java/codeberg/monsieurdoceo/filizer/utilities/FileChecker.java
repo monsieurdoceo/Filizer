@@ -17,7 +17,7 @@ public final class FileChecker {
         return true;
     }
 
-    public static boolean checkIfFileExist(Path path) {
+    public static boolean checkIfFileExists(Path path) {
         return Files.exists(path);
     }
 }

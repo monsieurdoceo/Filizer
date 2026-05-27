@@ -2,7 +2,7 @@ name: Filizer
 version: 0.0.3
 main: codeberg.monsieurdoceo.filizer.FilizerPlugin
 api-version: 1.21.10
-authors: [MonsieurDoceo]
+authors: [MonsieurDoceo, TheSayko]
 commands:
   check:
     description: "Check and view the contents of a file by a name"

@@ -8,13 +8,6 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-/**
- * Represents a managed YAML-backed custom file.
- *
- * <p>A {@link CustomFile} provides utility methods for modifying,
- * saving, reloading, and accessing configuration data through
- * a cached {@link FileGetter}.
- */
 public class CustomFile {
 
     private final String name;
@@ -31,7 +24,7 @@ public class CustomFile {
      * @param path the parent directory path
      * @param name the file name
 */
-    public CustomFile(Path path, String name) {
+    public CustomFile(final Path path, final String name) {
         this.name = name;
         this.file = FileCreator.createFile(path, name);
         reload();
@@ -47,7 +40,7 @@ public class CustomFile {
      * @param parent the parent directory
      * @param name the file name
 */
-    public CustomFile(File parent, String name) {
+    public CustomFile(final File parent, final String name) {
         this.name = name;
         this.file = FileCreator.createFile(parent.toPath(), name);
         reload();
@@ -83,9 +76,6 @@ public class CustomFile {
         this.lastModified = this.file.lastModified();
     }
 
-    /**
-    * Checks if the file was modified externally since last reload.
-*/
     private void sync() {
         if (this.file.lastModified() > this.lastModified) {
             reload();
@@ -113,7 +103,7 @@ public class CustomFile {
      * @param value the value to store
      * @return the current {@link CustomFile} instance
 */
-    public CustomFile set(String name, Object value) {
+    public CustomFile set(final String name, Object value) {
         sync();
         this.config.set(name, value);
         return this;
@@ -126,7 +116,7 @@ public class CustomFile {
      * @param values the values to store
      * @return the current {@link CustomFile} instance
 */
-    public CustomFile list(String name, List<?> values) {
+    public CustomFile list(final String name, List<?> values) {
         sync();
         this.config.set(name, values);
         return this;
@@ -142,7 +132,7 @@ public class CustomFile {
      * @param values the values to store
      * @return the current {@link CustomFile} instance
 */
-    public CustomFile list(String name, Object... values) {
+    public CustomFile list(final String name, Object... values) {
         sync();
         this.config.set(name, Arrays.asList(values));
         return this;
@@ -154,7 +144,7 @@ public class CustomFile {
      * @param fileSection the section to apply
      * @return the current {@link CustomFile} instance
 */
-    public CustomFile section(FileSection fileSection) {
+    public CustomFile section(final FileSection fileSection) {
         sync();
         fileSection.createSection(this.config);
         return this;

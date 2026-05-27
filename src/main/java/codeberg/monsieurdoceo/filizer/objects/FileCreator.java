@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/**
- * Utility class for creating physical files on disk.
- */
 public final class FileCreator {
 
     /**
@@ -23,7 +20,7 @@ public final class FileCreator {
     * @throws IllegalArgumentException if the file name is invalid
     * @throws IllegalStateException if an I/O error occurs while creating the file
 */
-    public static File createFile(Path path, String name) {
+    public static File createFile(final Path path, final String name) {
         if (!FileChecker.hasValidName(name)) {
             throw new IllegalArgumentException(
                 "[Filizer] Invalid file name: " + name

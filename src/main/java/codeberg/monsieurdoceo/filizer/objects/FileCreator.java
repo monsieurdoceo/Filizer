@@ -30,9 +30,9 @@ public final class FileCreator {
         Path filePath = path.resolve(name);
         try {
             if (
-                !FileChecker.checkIfFileExists(filePath.getParent())
+                !FileChecker.fileExists(filePath.getParent())
             ) Files.createDirectories(filePath.getParent());
-            if (!FileChecker.checkIfFileExists(filePath)) Files.createFile(
+            if (!FileChecker.fileExists(filePath)) Files.createFile(
                 filePath
             );
 

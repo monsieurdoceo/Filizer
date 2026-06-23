@@ -12,7 +12,7 @@ gradlePlugin {
     vcsUrl = 'https://codeberg.org/MonsieurDoceo/Filizer'
 
     plugins {
-        register('Filizer) {
+        register('Filizer') {
             id = 'com.codeberg.monsieurdoceo.filizer'
             displayName = 'Filizer'
             description = 'An Api to manage files on a server'

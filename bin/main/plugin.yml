@@ -1,6 +1,6 @@
 name: Filizer
 version: 0.0.3
-main: codeberg.monsieurdoceo.filizer.FilizerPlugin
+main: com.codeberg.monsieurdoceo.filizer.FilizerPlugin
 api-version: 1.21.10
 authors: [MonsieurDoceo, TheSayko]
 commands:

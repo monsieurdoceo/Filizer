@@ -1,9 +1,31 @@
 plugins {
     id 'java'
+    id 'com.gradle.plugin-publish' version '2.0.0'
+    id("org.gradle.plugin-compatibility") version "1.0.0"
 }
 
-group = 'codeberg.monsieurdoceo.filizer'
+group = 'com.codeberg.monsieurdoceo.filizer'
 version = '0.0.3'
+
+gradlePlugin {
+    website = 'https://codeberg.org/MonsieurDoceo/Filizer'
+    vcsUrl = 'https://codeberg.org/MonsieurDoceo/Filizer'
+
+    plugins {
+        register('Filizer) {
+            id = 'com.codeberg.monsieurdoceo.filizer'
+            displayName = 'Filizer'
+            description = 'An Api to manage files on a server'
+            tags.set(['files', 'api', 'server', 'java', 'minecraft', 'gradle'])
+            implementationClass = 'com.codeberg.monsieurdoceo.filizer.FilizerPlugin'
+            compatibility {
+                features {
+                    configurationCache = true
+                }
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()

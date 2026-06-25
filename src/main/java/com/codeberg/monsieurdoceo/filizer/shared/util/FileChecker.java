@@ -1,4 +1,4 @@
-package com.codeberg.monsieurdoceo.filizer.utilities;
+package com.codeberg.monsieurdoceo.filizer.shared.util;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +8,10 @@ import org.bukkit.Bukkit;
  * Utility methods for validating file names and checking file paths.
  */
 public final class FileChecker {
+
+    /*********************************************************/
+    /*********************** FUNCTIONS ***********************/
+    /*********************************************************/
 
     /**
      * Checks whether a file name is valid.
@@ -20,10 +24,9 @@ public final class FileChecker {
      * otherwise {@code false}
      */
     public static boolean hasValidName(String name) {
+
         if (name == null || name.trim().isEmpty()) {
-            Bukkit.getLogger().severe(
-                "[Filizer] The name of the file can't be null or empty."
-            );
+            Bukkit.getLogger().severe("[Filizer] The name of the file can't be null or empty.");
             return false;
         }
 
@@ -37,7 +40,5 @@ public final class FileChecker {
      * @return {@code true} if the file exists,
      * otherwise {@code false}
      */
-    public static boolean fileExists(Path path) {
-        return Files.exists(path);
-    }
+    public static boolean exists(Path path) { return Files.exists(path); }
 }

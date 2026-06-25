@@ -1,7 +1,9 @@
-package com.codeberg.monsieurdoceo.filizer.utilities;
+package com.codeberg.monsieurdoceo.filizer.file.domain;
 
-import com.google.common.collect.Maps;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -11,19 +13,27 @@ import org.bukkit.configuration.file.FileConfiguration;
  * <p>A {@code FileSection} stores key-value pairs internally
  * until {@link #createSection(FileConfiguration)} is called.
  */
-public class FileSection {
+public class ConfigurationSectionBuilder {
+
+    /**********************************************************/
+    /*********************** PROPERTIES ***********************/
+    /**********************************************************/
 
     private final String name;
-    private Map<String, Object> data;
+    private final Map<String, Object> data;
+
+    /*********************************************************/
+    /*********************** FUNCTIONS ***********************/
+    /*********************************************************/
 
     /**
      * Creates a new empty file section.
      *
      * @param name the name of the configuration section
      */
-    public FileSection(String name) {
+    public ConfigurationSectionBuilder(String name) {
         this.name = name;
-        this.data = Maps.newHashMap();
+        this.data = new HashMap<>();
     }
 
     /**
@@ -33,7 +43,7 @@ public class FileSection {
      * @param value the value associated with the key
      * @return this section instance for chaining
      */
-    public FileSection set(String name, Object value) {
+    public ConfigurationSectionBuilder set(String name, Object value) {
         this.data.put(name, value);
         return this;
     }
@@ -44,22 +54,21 @@ public class FileSection {
      * @param data the new section data
      * @return this section instance for chaining
      */
-    public FileSection section(Map<String, Object> data) {
-        this.data = data;
+    public ConfigurationSectionBuilder replaceData(Map<String, Object> data) {
+        this.data.clear();
+        this.data.putAll(data);
         return this;
     }
 
     /**
      * Creates this section in the provided configuration.
      *
-     * <p>If the configuration is {@code null},
-     * no action is performed.
+     * @throws NullPointerException if the configuration is {@code null}
      *
      * @param config the configuration in which to create the section
      */
     public void createSection(FileConfiguration config) {
-        if (config == null) return;
-
+        Objects.requireNonNull(config);
         config.createSection(this.name, this.data);
     }
 
@@ -68,16 +77,12 @@ public class FileSection {
      *
      * @return the section name
      */
-    public String getName() {
-        return this.name;
-    }
+    public String getName() { return this.name; }
 
     /**
      * Returns the data stored in this section.
      *
      * @return the section's key-value mappings
      */
-    public Map<String, Object> getData() {
-        return this.data;
-    }
+    public Map<String, Object> getData() { return this.data; }
 }

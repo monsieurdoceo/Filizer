@@ -1,7 +1,7 @@
 package com.codeberg.monsieurdoceo.filizer.commands;
 
-import com.codeberg.monsieurdoceo.filizer.file.api.FileManager;
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileReader;
+import com.codeberg.monsieurdoceo.filizer.storage.api.FileManager;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileReader;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import org.bukkit.command.Command;

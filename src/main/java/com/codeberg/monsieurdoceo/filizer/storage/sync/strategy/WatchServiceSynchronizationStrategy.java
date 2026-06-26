@@ -1,6 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer.file.sync.strategy;
-import com.codeberg.monsieurdoceo.filizer.file.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.file.sync.FileSynchronizationStrategy;
+package com.codeberg.monsieurdoceo.filizer.storage.sync.strategy;
+import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 
 /**
  * Synchronizes files using the Java WatchService API.

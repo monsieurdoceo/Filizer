@@ -1,7 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.file.infrastructure;
+package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
 
-import com.codeberg.monsieurdoceo.filizer.file.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.file.sync.FileSynchronizationStrategy;
+import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 
 import java.util.Objects;
 

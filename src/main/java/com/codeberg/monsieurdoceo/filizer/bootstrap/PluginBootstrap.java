@@ -1,10 +1,10 @@
 package com.codeberg.monsieurdoceo.filizer.bootstrap;
 
 import com.codeberg.monsieurdoceo.filizer.commands.TestCommand;
-import com.codeberg.monsieurdoceo.filizer.file.api.FileManager;
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileRegistry;
-import com.codeberg.monsieurdoceo.filizer.file.sync.FileSynchronizationStrategy;
-import com.codeberg.monsieurdoceo.filizer.file.sync.strategy.LastModifiedStrategy;
+import com.codeberg.monsieurdoceo.filizer.storage.api.FileManager;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 

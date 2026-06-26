@@ -1,9 +1,9 @@
-package com.codeberg.monsieurdoceo.filizer.file.domain;
+package com.codeberg.monsieurdoceo.filizer.storage.domain;
 
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileFactory;
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileReader;
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileSynchronizer;
-import com.codeberg.monsieurdoceo.filizer.file.sync.strategy.LastModifiedStrategy;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileFactory;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileReader;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 
 import java.io.File;
 import java.nio.file.Path;

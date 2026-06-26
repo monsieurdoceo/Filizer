@@ -1,4 +1,4 @@
-package com.codeberg.monsieurdoceo.filizer.file.infrastructure;
+package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
 
 import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.codeberg.monsieurdoceo.filizer.file.infrastructure;
+package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.codeberg.monsieurdoceo.filizer.file.domain;
+package com.codeberg.monsieurdoceo.filizer.storage.domain;
 
 import java.util.HashMap;
 import java.util.Map;

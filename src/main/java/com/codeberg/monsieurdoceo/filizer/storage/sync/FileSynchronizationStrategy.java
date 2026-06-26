@@ -1,5 +1,5 @@
-package com.codeberg.monsieurdoceo.filizer.file.sync;
-import com.codeberg.monsieurdoceo.filizer.file.domain.CustomFile;
+package com.codeberg.monsieurdoceo.filizer.storage.sync;
+import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
 
 /**
  * Defines how a {@link CustomFile} should be synchronized

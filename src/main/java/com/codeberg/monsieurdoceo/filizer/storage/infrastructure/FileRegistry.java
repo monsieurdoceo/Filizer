@@ -9,6 +9,12 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.nio.file.Path;
 
+/**
+ * Maintains the registry of managed files.
+ *
+ * <p>Stores, retrieves, and removes {@link CustomFile}
+ * instances using their normalized file paths.
+ */
 public final class FileRegistry {
 
     /**********************************************************/

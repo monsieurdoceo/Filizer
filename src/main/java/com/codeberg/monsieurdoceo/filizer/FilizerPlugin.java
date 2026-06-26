@@ -3,6 +3,12 @@ import com.codeberg.monsieurdoceo.filizer.bootstrap.PluginBootstrap;
 import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Main entry point of the Filizer plugin.
+ *
+ * <p>Coordinates the plugin lifecycle and delegates startup
+ * and shutdown to the bootstrap.
+ */
 public final class FilizerPlugin extends JavaPlugin {
 
     /**********************************************************/

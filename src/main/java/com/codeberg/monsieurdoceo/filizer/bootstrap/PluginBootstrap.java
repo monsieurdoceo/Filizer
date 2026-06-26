@@ -11,6 +11,12 @@ import com.codeberg.monsieurdoceo.filizer.shared.logging.BukkitAppLogger;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Bootstraps the Filizer plugin.
+ *
+ * <p>Responsible for initializing and wiring the plugin
+ * components during startup and releasing resources during shutdown.
+ */
 public final class PluginBootstrap {
 
     /**********************************************************/

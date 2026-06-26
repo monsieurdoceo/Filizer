@@ -17,6 +17,12 @@ import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
 import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
 import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
 
+/**
+ * Provides access to managed files.
+ *
+ * <p>This class is responsible for creating, registering,
+ * retrieving, synchronizing, and deleting {@link CustomFile} instances.
+ */
 public final class FileManager {
 
     /**********************************************************/
@@ -36,6 +42,7 @@ public final class FileManager {
      * Constructs a new {@link FileManager} instance.
      * @param registry The file registry to use
      * @param strategy The synchronization strategy to use
+     * @param logger the application logger
      */
     public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy, AppLogger logger) {
         this(registry, strategy, logger, new FilizerExceptions(logger));

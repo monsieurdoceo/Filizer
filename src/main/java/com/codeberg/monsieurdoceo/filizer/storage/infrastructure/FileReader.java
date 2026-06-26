@@ -6,6 +6,12 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+/**
+ * Provides access to a managed file configuration.
+ *
+ * <p>Offers convenient methods for retrieving values,
+ * configuration sections, and keys from a {@link FileConfiguration}.
+ */
 public final class FileReader {
 
     /**********************************************************/

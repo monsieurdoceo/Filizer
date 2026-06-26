@@ -9,6 +9,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.MemorySection;
 
+/**
+ * Provides a development command for inspecting managed files.
+ */
 public class TestCommand implements BasicCommand, CommandExecutor {
 
     /**********************************************************/
@@ -21,6 +24,10 @@ public class TestCommand implements BasicCommand, CommandExecutor {
     /********************** CONSTRUCTOR **********************/
     /*********************************************************/
 
+    /**
+     * Creates a new {@link TestCommand} instance.
+     * @param fileManager The file manager to use
+     */
     public TestCommand(FileManager fileManager) { this.fileManager = fileManager; }
 
     /*********************************************************/

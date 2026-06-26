@@ -13,6 +13,12 @@ import java.util.Objects;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+/**
+ * Represents a managed configuration file.
+ *
+ * <p>A {@link CustomFile} provides a high-level API for creating,
+ * reading, modifying, saving, and synchronizing YAML configuration files.
+ */
 public class CustomFile {
 
     /**********************************************************/

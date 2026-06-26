@@ -8,7 +8,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
+/**
+ * Factory responsible for creating managed files.
+ *
+ * <p>Handles file name validation, directory creation,
+ * and file initialization.
+ */
 public final class FileFactory {
+
+    /**********************************************************/
+    /********************** CONSTRUCTORS **********************/
+    /**********************************************************/
+
+    /**
+     * Initializes the file factory.
+     *
+     * <p>No custom initialization is required.
+     */
+    public FileFactory() {}
 
     /*********************************************************/
     /*********************** FUNCTIONS ***********************/
@@ -22,6 +39,7 @@ public final class FileFactory {
      *
      * @param path the parent directory path
      * @param name the file name
+     * @param errors the exception factory
      * @return the created file
      * @throws IllegalArgumentException if the file name is invalid
      * @throws IllegalStateException if an I/O error occurs while creating the file

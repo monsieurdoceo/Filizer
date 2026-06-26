@@ -13,8 +13,9 @@ import java.util.stream.Stream;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
 import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
+import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
+import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
 import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
-import org.bukkit.Bukkit;
 
 public final class FileManager {
 
@@ -24,19 +25,34 @@ public final class FileManager {
 
     private final FileRegistry fileRegistry;
     private final FileSynchronizer synchronizer;
+    private final AppLogger logger;
+    private final FilizerExceptions errors;
 
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
+    /**********************************************************/
+    /********************** CONSTRUCTORS **********************/
+    /**********************************************************/
 
     /**
      * Constructs a new {@link FileManager} instance.
      * @param registry The file registry to use
      * @param strategy The synchronization strategy to use
      */
-    public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy) {
+    public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy, AppLogger logger) {
+        this(registry, strategy, logger, new FilizerExceptions(logger));
+    }
+
+    /**
+     * Constructs a new {@link FileManager} instance.
+     * @param registry The file registry to use
+     * @param strategy The synchronization strategy to use
+     * @param logger the application logger
+     * @param errors the exception factory to use
+     */
+    public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy, AppLogger logger, FilizerExceptions errors) {
         this.fileRegistry = registry;
         this.synchronizer = new FileSynchronizer(strategy);
+        this.logger = logger;
+        this.errors = errors;
     }
 
     /*********************************************************/
@@ -59,10 +75,14 @@ public final class FileManager {
      */
     public Optional<CustomFile> findFile(String name) {
 
-        if(!FileChecker.hasValidName(name)) return Optional.empty();
+        if(!FileChecker.hasValidName(name)) {
+            this.logger.warn("The name of the file can't be null or empty.");
+            return Optional.empty();
+        }
+
         Collection<CustomFile> matches = this.fileRegistry.findByName(name);
         if(matches.size() == 1) return Optional.of(matches.iterator().next());
-        if(matches.size() > 1) Bukkit.getLogger().warning("[Filizer] Ambiguous file name lookup ignored for: " + name);
+        if(matches.size() > 1) this.errors.ambiguousFileName(name);
         return Optional.empty();
     }
 
@@ -86,8 +106,9 @@ public final class FileManager {
      * @throws IllegalArgumentException if the file does not exist
      */
     public CustomFile requireFile(String name) {
-        return findFile(name).orElseThrow(() -> new IllegalArgumentException("[Filizer] File not found: " + name));
+        return findFile(name).orElseThrow(() -> this.errors.fileNotFound(name, null));
     }
+
     /**
      * Adds a new {@link CustomFile} to storage if it does not already exist.
      *
@@ -97,11 +118,10 @@ public final class FileManager {
      */
     private CustomFile addFile(Path path, String name) {
 
-        if(path == null || !FileChecker.hasValidName(name))
-            throw new IllegalArgumentException("[Filizer] Invalid file path or name: " + path + "/" + name);
+        if(path == null || !FileChecker.hasValidName(name)) throw this.errors.invalidFilePath(path, name, null);
 
         return findFile(path, name).orElseGet(() -> {
-            CustomFile customFile = new CustomFile(path, name, this.synchronizer);
+            CustomFile customFile = new CustomFile(path, name, this.synchronizer, this.errors);
             this.fileRegistry.add(customFile);
             return customFile;
         });
@@ -202,24 +222,19 @@ public final class FileManager {
         if(customFile == null) return false;
 
         try {
-
             Path path = customFile.getFile().toPath();
 
             if(Files.deleteIfExists(path)) {
                 removeFile(customFile);
                 return true;
             }
-
-        } catch(IOException e) {
-            Bukkit.getLogger().severe("[Filizer] IO Error deleting " + customFile.getName() + ": " + e.getMessage());
-        }
+        } catch(IOException e) { throw this.errors.fileDeletionFailed(customFile.getName(), e); }
 
         return false;
     }
 
     /**
      * Retrieves the underlying file storage instance.
-     *
      * @return the file storage
      */
     public FileRegistry getRegistry() { return this.fileRegistry; }

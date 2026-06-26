@@ -3,12 +3,13 @@ package com.codeberg.monsieurdoceo.filizer.storage.domain;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileFactory;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileReader;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
+import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -21,6 +22,7 @@ public class CustomFile {
     private final String name;
     private final File file;
     private final FileSynchronizer synchronizer;
+    private final FilizerExceptions errors;
 
     private FileConfiguration config;
     private FileReader reader;
@@ -36,50 +38,30 @@ public class CustomFile {
      *
      * @param path the parent directory path
      * @param name the file name
-     */
-    public CustomFile(final Path path, final String name) {
-        this(path, name, new FileSynchronizer(new LastModifiedStrategy()));
-    }
-
-    /**
-     * Creates a new {@link CustomFile} from a parent path, file name, and synchronizer.
-     *
-     * @param path the parent directory path
-     * @param name the file name
      * @param synchronizer the synchronization service to use
+     * @param errors the exception factory
      */
-    public CustomFile(final Path path, final String name, final FileSynchronizer synchronizer) {
+    public CustomFile(final Path path, final String name, final FileSynchronizer synchronizer, final FilizerExceptions errors) {
         this.name = name;
-        this.file = FileFactory.createFile(path, name);
+        this.file = FileFactory.createFile(path, name, Objects.requireNonNull(errors, "errors"));
         this.synchronizer = synchronizer;
+        this.errors = errors;
         reload();
     }
 
     /**
      * Creates a new {@link CustomFile} from a parent directory and file name.
      *
-     * <p>This constructor behaves like
-     * {@link #CustomFile(Path, String)} but accepts a {@link File}
-     * as the parent reference.
-     *
-     * @param parent the parent directory
-     * @param name the file name
-     */
-    public CustomFile(final File parent, final String name) {
-        this(parent, name, new FileSynchronizer(new LastModifiedStrategy()));
-    }
-
-    /**
-     * Creates a new {@link CustomFile} from a parent directory, file name, and synchronizer.
-     *
      * @param parent the parent directory
      * @param name the file name
      * @param synchronizer the synchronization service to use
+     * @param errors the exception factory
      */
-    public CustomFile(final File parent, final String name, final FileSynchronizer synchronizer) {
+    public CustomFile(final File parent, final String name, final FileSynchronizer synchronizer, final FilizerExceptions errors) {
         this.name = name;
-        this.file = FileFactory.createFile(parent.toPath(), name);
+        this.file = FileFactory.createFile(parent.toPath(), name, errors);
         this.synchronizer = synchronizer;
+        this.errors = errors;
         reload();
     }
 
@@ -89,13 +71,10 @@ public class CustomFile {
      * @throws IllegalStateException if the file cannot be saved
      */
     public void save() {
-
         try {
-
             this.config.save(this.file);
             this.lastModified = this.file.lastModified();
-
-        } catch(Exception e) { throw new IllegalStateException("[Filizer] Failed to save file: " + name, e); }
+        } catch(Exception e) { throw this.errors.fileSaveFailed(this.name, e); }
     }
 
     /**
@@ -177,12 +156,12 @@ public class CustomFile {
     /**
      * Creates and applies a configuration section.
      *
-     * @param fileSection the section to apply
+     * @param configSection the section to apply
      * @return the current {@link CustomFile} instance
      */
-    public CustomFile section(final ConfigurationSectionBuilder fileSection) {
+    public CustomFile section(final ConfigurationSectionBuilder configSection) {
         sync();
-        fileSection.createSection(this.config);
+        configSection.createSection(this.config);
         return this;
     }
 

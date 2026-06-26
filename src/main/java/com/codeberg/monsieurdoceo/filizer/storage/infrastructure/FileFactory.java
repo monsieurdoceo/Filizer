@@ -1,10 +1,12 @@
 package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
 
+import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
 import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public final class FileFactory {
 
@@ -24,19 +26,18 @@ public final class FileFactory {
      * @throws IllegalArgumentException if the file name is invalid
      * @throws IllegalStateException if an I/O error occurs while creating the file
      */
-    public static File createFile(final Path path, final String name) {
+    public static File createFile(final Path path, final String name, final FilizerExceptions errors) {
 
-        if(!FileChecker.hasValidName(name)) throw new IllegalArgumentException("[Filizer] Invalid file name: " + name);
+        Objects.requireNonNull(errors, "errors");
+
+        if(!FileChecker.hasValidName(name)) throw errors.invalidFileName(name, null);
 
         Path filePath = path.resolve(name);
 
         try {
-
             if(!FileChecker.exists(filePath.getParent())) Files.createDirectories(filePath.getParent());
             if(!FileChecker.exists(filePath)) Files.createFile(filePath);
-
             return filePath.toFile();
-
-        } catch(IOException e) { throw new IllegalStateException("[Filizer] Critical I/O error for " + name, e); }
+        } catch(IOException e) { throw errors.fileCreationFailed(path, name, e); }
     }
 }

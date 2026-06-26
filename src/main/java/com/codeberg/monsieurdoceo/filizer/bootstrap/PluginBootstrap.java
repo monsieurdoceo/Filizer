@@ -61,7 +61,7 @@ public final class PluginBootstrap {
         registerCommands(this.fileManager);
     }
 
-    /*
+    /**
      * Stops the plugin.
      */
     public void stop() {

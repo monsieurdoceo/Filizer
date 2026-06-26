@@ -1,6 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer.file.api;
+package com.codeberg.monsieurdoceo.filizer.storage.api;
 
-import com.codeberg.monsieurdoceo.filizer.file.domain.CustomFile;
+import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileRegistry;
-import com.codeberg.monsieurdoceo.filizer.file.sync.FileSynchronizationStrategy;
-import com.codeberg.monsieurdoceo.filizer.file.infrastructure.FileSynchronizer;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
 import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
 import org.bukkit.Bukkit;
 
@@ -167,13 +167,9 @@ public final class FileManager {
      * be accessed
      */
     public void storeAllFiles(Path root) throws IOException {
-
         if(Files.notExists(root)) Files.createDirectories(root);
-
         try(Stream<Path> paths = Files.walk(root)) {
-            paths.filter(Files::isRegularFile).forEach(path -> {
-                addFile(path.getParent(), path.getFileName().toString());
-            });
+            paths.filter(Files::isRegularFile).forEach(path -> addFile(path.getParent(), path.getFileName().toString()));
         }
     }
 

@@ -1,108 +1,155 @@
-# Filizer - Architecture et points a corriger
+# Filizer - Architecture overview
 
-## Etat actuel
+## Goal of the project
 
-Le projet est maintenant structure de facon plus propre et plus maintenable:
+Filizer is a small Bukkit/Paper plugin focused on file management.
+The codebase is organized so that the plugin entry point stays thin, while the file logic, logging, and error handling live in dedicated packages.
 
-- `FilizerPlugin` est le point d'entree Bukkit.
-- `PluginBootstrap` centralise le wiring.
-- `FileManager` joue le role de facade.
-- `CustomFile` reste l'objet metier principal.
-- `FileRegistry` n'est plus un singleton utilise dans le flux normal.
-- La registry est indexee par chemin absolu normalise, ce qui evite les collisions de noms.
+## Current structure
 
-La compilation passe actuellement.
+### Startup and wiring
 
-## Ce qu'il faut encore corriger
+- `FilizerPlugin` is the Bukkit entry point.
+- `PluginBootstrap` creates and wires the runtime objects.
+- The bootstrap initializes:
+  - the application logger
+  - the exception factory
+  - the file registry
+  - the file manager
+  - the command bindings
 
-### 1. Finaliser `WatchServiceSynchronizationStrategy`
+### File management
 
-Actuellement, la strategie est encore un stub.
+- `storage/api/FileManager` is the main facade used by commands and future services.
+- It handles:
+  - file lookup
+  - file creation
+  - file registration
+  - deletion
+  - directory scanning
+  - synchronization delegation
 
-A faire:
-- creer un `WatchService` unique
-- enregistrer les dossiers parents des fichiers suivis
-- lancer un thread dedie a l'ecoute des evenements
-- recharger le bon `CustomFile` lors des modifications
-- fermer proprement le watcher a l'arret du plugin
+### File model
 
-### 2. Ajouter une vraie couche de tests
+- `storage/domain/CustomFile` represents one managed file.
+- It stores the file state and the loaded YAML configuration.
+- It exposes the main read/write operations on the file content.
 
-Le projet n'a pas encore de tests automatises.
+### Infrastructure
 
-Tests a ajouter en priorite:
-- creation d'un fichier via `FileManager`
-- ajout unique dans le registry
-- recherche par nom et par chemin
-- suppression du disque et du registry
-- rechargement apres modification externe
+- `storage/infrastructure/FileFactory` creates files on disk.
+- `storage/infrastructure/FileReader` wraps configuration reads.
+- `storage/infrastructure/FileRegistry` stores the managed files in memory.
+- `storage/infrastructure/FileSynchronizer` delegates synchronization to a strategy.
 
-### 3. Durer `PluginBootstrap`
+### Synchronization
 
-`start()` est propre, mais `stop()` est encore minimal.
+- `storage/sync/FileSynchronizationStrategy` is the contract for sync behavior.
+- Implementations currently available:
+  - `LastModifiedStrategy`
+  - `NeverSynchronizationStrategy`
+  - `WatchServiceSynchronizationStrategy`
 
-A prevoir:
-- arret des threads ou watchers futurs
-- nettoyage des ressources eventuelles
-- remise a zero des references si besoin
+### Shared concerns
 
-### 4. Mieux gerer les recherches par nom
+- `shared/logging` contains the application logger abstraction and the Bukkit adapter.
+- `shared/exceptions` contains the centralized exception factory and the specific exception types.
+- `shared/util/FileChecker` contains basic file-name and path helpers.
 
-La recherche par nom reste pratique, mais elle peut devenir ambigue si plusieurs fichiers ont le meme nom.
+## What is already in place
 
-Recommandation:
-- privilegier les recherches par chemin dans les nouveaux usages
-- garder `findFile(String)` pour compatibilite
-- documenter clairement son comportement en cas de collision
+- The plugin entry point is separated from the bootstrap logic.
+- Logging is centralized instead of being scattered through the codebase.
+- Exceptions are centralized and typed.
+- The file registry is no longer used as a global singleton in the normal runtime flow.
+- Files are indexed by normalized absolute path, which avoids collisions between same-name files in different folders.
+- The project compiles successfully.
 
-### 5. Nettoyer les conventions de nommage
+## What needs attention
 
-Le projet est encore un peu mixe entre anciens et nouveaux noms.
+### 1. WatchService strategy
 
-A harmoniser:
-- `file/infrastructure` pour tout ce qui touche au disque et au YAML
-- `file/domain` pour les objets metier
-- `file/api` pour la facade publique
-- `shared/util` pour les utilitaires transverses
+`WatchServiceSynchronizationStrategy` is present, but it is still the part to treat with the most care if you want real event-driven sync.
 
-## Ce qu'il faut ajouter ensuite
+Recommended follow-up:
+- create and manage a single watcher
+- register parent directories for managed files
+- react to file create / modify / delete events
+- reload the matching `CustomFile`
+- close the watcher cleanly on shutdown
 
-### Fonctionnel
+### 2. Name-based lookups
 
-- une vraie gestion des erreurs plus fine
-- une methode de chargement de fichiers existants plus explicite
-- une API plus claire pour les cas ou le nom n'est pas unique
-- un vrai cycle de vie pour les services de synchro
+`findFile(String)` is convenient, but it can become ambiguous if two files share the same name in different folders.
 
-### Qualite
+Current recommendation:
+- prefer path-based lookup in new code
+- keep name-based lookup for compatibility
+- document the ambiguity behavior clearly for users of the API
 
-- tests unitaires
-- tests d'integration legers
-- validation des chemins et des noms plus stricte
-- documentation des comportements limites
+### 3. Plugin shutdown
 
-## Priorites recommandees
+`PluginBootstrap.stop()` is intentionally light for now.
 
-### Priorite haute
+It should eventually be responsible for:
+- stopping async resources
+- closing watchers
+- releasing runtime references if needed
 
-1. Finaliser la synchro `WatchService`
-2. Ajouter des tests sur `FileManager` et `FileRegistry`
-3. Documenter les cas ambigus sur la recherche par nom
+### 4. Package naming
 
-### Priorite moyenne
+The current package layout is already readable.
+The only package that may still evolve is `shared/util`, depending on whether you want to keep `FileChecker` there or move it to a more specific package later.
 
-4. Nettoyer le lifecycle du bootstrap
-5. Ajouter une meilleure gestion des erreurs metier
-6. Harmoniser les conventions de nommage restantes
+## What remains to be added
 
-### Priorite basse
+### Functional
 
-7. Raffiner la documentation interne
-8. Ajouter des exemples d'utilisation de l'API
-9. Preparer une couche plus formelle pour les futures features
+- a complete WatchService implementation
+- a more explicit API for loading existing files
+- a clearer story for ambiguous file names
+- stronger lifecycle handling for background services
 
-## Resume
+### Quality
 
-La structure actuelle est deja saine.
+- unit tests for `FileManager`
+- tests for `FileRegistry`
+- tests for the centralized exceptions
+- lightweight integration tests for file operations
+- stricter validation of paths and file names
 
-Les points restants ne sont pas des urgences de refactor massif, mais plutot des finitions qui feront passer le projet d'une bonne base a une base vraiment robuste.
+### Documentation
+
+- usage examples for the public API
+- notes on edge cases
+- notes on duplicate names and path resolution
+
+## Suggested priorities
+
+### High priority
+
+1. Finish the WatchService strategy
+2. Add tests around file creation, lookup, and deletion
+3. Document the lookup behavior when names collide
+
+### Medium priority
+
+4. Improve plugin shutdown handling
+5. Refine error handling if new cases appear
+6. Decide whether `shared/util` should stay as-is or be renamed later
+
+### Low priority
+
+7. Add API usage examples
+8. Expand internal documentation
+9. Prepare the codebase for future features
+
+## Summary
+
+The codebase is already in a good shape for a small plugin:
+- the entry point is clean
+- the bootstrap owns wiring
+- the file subsystem is split by responsibility
+- shared logging and exceptions are centralized
+
+The main remaining work is about finishing the sync story, adding tests, and keeping the API behavior well documented for other developers.

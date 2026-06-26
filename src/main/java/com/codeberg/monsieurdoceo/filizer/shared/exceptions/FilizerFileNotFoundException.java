@@ -8,10 +8,6 @@ import java.util.Objects;
  */
 public final class FilizerFileNotFoundException extends IllegalArgumentException {
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
     /**
      * Creates a new file-not-found exception.
      *

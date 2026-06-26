@@ -11,15 +11,10 @@ import java.util.Objects;
  */
 public final class FileSynchronizer {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The synchronization strategy to use.
+     */
     private final FileSynchronizationStrategy strategy;
-
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
 
     /**
      * Creates a new synchronizer.
@@ -29,10 +24,6 @@ public final class FileSynchronizer {
     public FileSynchronizer(FileSynchronizationStrategy strategy) {
         this.strategy = Objects.requireNonNull(strategy, "strategy");
     }
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Ensures that the given file is synchronized.

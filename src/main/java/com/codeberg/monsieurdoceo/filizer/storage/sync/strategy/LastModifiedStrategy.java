@@ -7,20 +7,12 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  */
 public final class LastModifiedStrategy implements FileSynchronizationStrategy {
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
-
     /**
      * Creates a new {@link LastModifiedStrategy} instance.
      *
      * <p>This class does not require custom initialization.
      */
     public LastModifiedStrategy() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Synchronizes the given file if the last modified timestamp is newer.

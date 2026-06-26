@@ -9,17 +9,20 @@ import java.util.logging.Logger;
  */
 public final class BukkitAppLogger implements AppLogger {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The Bukkit logger.
+     */
     private final Logger logger;
-    private static final String PREFIX = "[Filizer] ";
-    private String loggedMessage = "";
 
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
+    /**
+     * The prefix to use for all log messages.
+     */
+    private static final String PREFIX = "[Filizer] ";
+
+    /**
+     * The currently logged message.
+     */
+    private String loggedMessage = "";
 
     /**
      * Creates a new logger adapter.
@@ -28,17 +31,11 @@ public final class BukkitAppLogger implements AppLogger {
      */
     public BukkitAppLogger(Logger logger) { this.logger = Objects.requireNonNull(logger, "logger"); }
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String getCurrentlyLoggedMessage() { return this.loggedMessage; }
-
-    // ############################################### //
 
     /**
      * {@inheritDoc}

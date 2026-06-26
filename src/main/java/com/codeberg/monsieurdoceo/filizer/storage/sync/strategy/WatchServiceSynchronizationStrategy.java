@@ -15,20 +15,12 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  */
 public final class WatchServiceSynchronizationStrategy implements FileSynchronizationStrategy {
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
-
     /**
      * Creates a new {@link WatchServiceSynchronizationStrategy} instance.
      *
      * <p>This class does not require custom initialization.
      */
     public WatchServiceSynchronizationStrategy() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Synchronizes the given file.

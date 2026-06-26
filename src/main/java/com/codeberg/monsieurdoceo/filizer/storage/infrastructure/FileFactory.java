@@ -16,20 +16,12 @@ import java.util.Objects;
  */
 public final class FileFactory {
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
-
     /**
      * Initializes the file factory.
      *
      * <p>No custom initialization is required.
      */
     public FileFactory() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Creates a file from a parent directory path and file name.

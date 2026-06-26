@@ -17,15 +17,10 @@ import java.nio.file.Path;
  */
 public final class FileRegistry {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The map of stored files.
+     */
     private final Map<String, CustomFile> customFiles = new ConcurrentHashMap<>();
-
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
 
     /**
      * Initializes a new file registry instance.
@@ -33,10 +28,6 @@ public final class FileRegistry {
      * <p>No custom initialization is required.
      */
     public FileRegistry() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Checks whether a file with the given {@link CustomFile} exists in storage.

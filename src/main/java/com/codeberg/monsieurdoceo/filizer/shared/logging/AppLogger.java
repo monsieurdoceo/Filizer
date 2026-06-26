@@ -5,17 +5,11 @@ package com.codeberg.monsieurdoceo.filizer.shared.logging;
  */
 public interface AppLogger {
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
     /**
      * Gets the currently logged message.
      * @return the currently logged message
      */
     String getCurrentlyLoggedMessage();
-
-    // ############################################### //
 
     /**
      * Logs an informational message.

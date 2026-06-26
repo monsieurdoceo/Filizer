@@ -15,16 +15,15 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class ConfigurationSectionBuilder {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The name of the configuration section.
+     */
     private final String name;
-    private final Map<String, Object> data;
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
+    /**
+     * The key-value mappings stored in this section.
+     */
+    private final Map<String, Object> data;
 
     /**
      * Creates a new empty file section.

@@ -10,15 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class FilizerPlugin extends JavaPlugin {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The plugin bootstrap instance.
+     */
     private PluginBootstrap bootstrap;
-
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
 
     /**
      * Initializes the Filizer plugin instance.
@@ -27,10 +22,6 @@ public final class FilizerPlugin extends JavaPlugin {
      * <p>No custom initialization is required.
      */
     public FilizerPlugin() {}
-
-    /**********************************************************/
-    /*********************** LIFE CYCLE ***********************/
-    /**********************************************************/
 
     /**
      * Called when the plugin is enabled.

@@ -10,20 +10,12 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  */
 public final class NeverSynchronizationStrategy implements FileSynchronizationStrategy {
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
-
     /**
      * Creates a new {@link NeverSynchronizationStrategy} instance.
      *
      * <p>This class does not require custom initialization.
      */
     public NeverSynchronizationStrategy() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Performs no synchronization.

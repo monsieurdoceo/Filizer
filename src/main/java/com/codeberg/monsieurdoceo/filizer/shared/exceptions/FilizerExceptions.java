@@ -9,15 +9,10 @@ import java.util.Objects;
  */
 public final class FilizerExceptions {
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
+    /**
+     * The application logger.
+     */
     private final AppLogger logger;
-
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
 
     /**
      * Creates a new exception factory.
@@ -25,10 +20,6 @@ public final class FilizerExceptions {
      * @param logger the application logger
      */
     public FilizerExceptions(AppLogger logger) { this.logger = Objects.requireNonNull(logger, "logger"); }
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Creates an exception for a missing file.

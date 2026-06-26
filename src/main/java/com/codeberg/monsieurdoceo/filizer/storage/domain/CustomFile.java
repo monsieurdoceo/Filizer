@@ -21,23 +21,40 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class CustomFile {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The file name.
+     */
     private final String name;
+
+    /**
+     * The underlying file instance.
+     */
     private final File file;
+
+    /**
+     * The synchronization service to use.
+     */
     private final FileSynchronizer synchronizer;
+
+    /**
+     * The exception factory.
+     */
     private final FilizerExceptions errors;
 
+    /**
+     * The file configuration.
+     */
     private FileConfiguration config;
+
+    /**
+     * The file reader.
+     */
     private FileReader reader;
 
+    /**
+     * The last modified timestamp of the file.
+     */
     private long lastModified;
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Creates a new {@link CustomFile} from a parent path and file name.

@@ -14,16 +14,10 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public final class FileReader {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The backing configuration.
+     */
     private final FileConfiguration config;
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
 
     /**
      * Creates a new {@link FileReader} from a configuration instance.

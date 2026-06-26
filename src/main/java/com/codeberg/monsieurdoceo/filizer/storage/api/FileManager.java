@@ -25,18 +25,25 @@ import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
  */
 public final class FileManager {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The file registry used to store and retrieve files.
+     */
     private final FileRegistry fileRegistry;
-    private final FileSynchronizer synchronizer;
-    private final AppLogger logger;
-    private final FilizerExceptions errors;
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
+    /**
+     * The file synchronizer used to synchronize file changes.
+     */
+    private final FileSynchronizer synchronizer;
+
+    /**
+     * The application logger.
+     */
+    private final AppLogger logger;
+
+    /**
+     * The exception factory.
+     */
+    private final FilizerExceptions errors;
 
     /**
      * Constructs a new {@link FileManager} instance.
@@ -61,10 +68,6 @@ public final class FileManager {
         this.logger = logger;
         this.errors = errors;
     }
-
-    /*********************************************************/
-    /*********************** FUNCTIONS *****    ******************/
-    /*********************************************************/
 
     /**
      * Checks whether a file with the given name exists in storage.

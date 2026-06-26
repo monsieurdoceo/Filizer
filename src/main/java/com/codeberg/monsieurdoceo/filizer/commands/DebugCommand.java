@@ -14,25 +14,16 @@ import org.bukkit.configuration.MemorySection;
  */
 public class DebugCommand implements BasicCommand, CommandExecutor {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The file manager to use.
+     */
     private final FileManager fileManager;
-
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
 
     /**
      * Creates a new {@link DebugCommand} instance.
      * @param fileManager The file manager to use
      */
     public DebugCommand(FileManager fileManager) { this.fileManager = fileManager; }
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Executes the command.

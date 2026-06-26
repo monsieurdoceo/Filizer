@@ -19,29 +19,36 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class PluginBootstrap {
 
-    /**********************************************************/
-    /*********************** PROPERTIES ***********************/
-    /**********************************************************/
-
+    /**
+     * The plugin to bootstrap.
+     */
     private final JavaPlugin plugin;
-    private AppLogger logger;
-    private FilizerExceptions errors;
-    private FileRegistry registry;
-    private FileManager fileManager;
 
-    /*********************************************************/
-    /********************** CONSTRUCTOR **********************/
-    /*********************************************************/
+    /**
+     * The logger instance.
+     */
+    private AppLogger logger;
+
+    /**
+     * The exception factory.
+     */
+    private FilizerExceptions errors;
+
+    /**
+     * The file registry.
+     */
+    private FileRegistry registry;
+
+    /**
+     * The file manager.
+     */
+    private FileManager fileManager;
 
     /**
      * Creates a new {@link PluginBootstrap} instance.
      * @param plugin The plugin to bootstrap
      */
     public PluginBootstrap(JavaPlugin plugin) { this.plugin = plugin; }
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Starts the plugin.

@@ -7,10 +7,6 @@ import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
  */
 public interface FileSynchronizationStrategy {
 
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
-
     /**
      * Synchronizes the given file if required.
      *

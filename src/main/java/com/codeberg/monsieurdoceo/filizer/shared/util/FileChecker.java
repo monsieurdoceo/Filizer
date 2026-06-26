@@ -8,20 +8,12 @@ import java.nio.file.Path;
  */
 public final class FileChecker {
 
-    /**********************************************************/
-    /********************** CONSTRUCTORS **********************/
-    /**********************************************************/
-
     /**
      * Initializes the file checker.
      *
      * <p>No custom initialization is required.
      */
     public FileChecker() {}
-
-    /*********************************************************/
-    /*********************** FUNCTIONS ***********************/
-    /*********************************************************/
 
     /**
      * Checks whether a file name is valid.

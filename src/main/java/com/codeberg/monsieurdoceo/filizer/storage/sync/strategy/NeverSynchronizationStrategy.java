@@ -8,7 +8,18 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  * <p>This strategy assumes that files cannot be modified
  * externally.
  */
-public final class NeverSynchronizationStrategy  implements FileSynchronizationStrategy {
+public final class NeverSynchronizationStrategy implements FileSynchronizationStrategy {
+
+    /**********************************************************/
+    /********************** CONSTRUCTORS **********************/
+    /**********************************************************/
+
+    /**
+     * Creates a new {@link NeverSynchronizationStrategy} instance.
+     *
+     * <p>This class does not require custom initialization.
+     */
+    public NeverSynchronizationStrategy() {}
 
     /*********************************************************/
     /*********************** FUNCTIONS ***********************/

@@ -33,7 +33,7 @@ public final class BukkitAppLogger implements AppLogger {
     /*********************************************************/
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String getCurrentlyLoggedMessage() { return this.loggedMessage; }
@@ -41,7 +41,7 @@ public final class BukkitAppLogger implements AppLogger {
     // ############################################### //
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void info(String message) {
@@ -50,7 +50,7 @@ public final class BukkitAppLogger implements AppLogger {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void warn(String message) {
@@ -59,7 +59,7 @@ public final class BukkitAppLogger implements AppLogger {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void error(String message) {
@@ -68,7 +68,7 @@ public final class BukkitAppLogger implements AppLogger {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void error(String message, Throwable throwable) {

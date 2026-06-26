@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'com.gradle.plugin-publish' version '2.0.0'
     id("org.gradle.plugin-compatibility") version "1.0.0"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 group = 'com.codeberg.monsieurdoceo.filizer'
@@ -40,4 +41,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+runServer {
+    minecraftVersion("1.21.10")
 }

@@ -34,6 +34,7 @@ public final class FilizerExceptions {
      * Creates an exception for a missing file.
      *
      * @param name the file name
+     * @param cause the original cause
      * @return the exception to throw
      */
     public IllegalArgumentException fileNotFound(String name, Throwable cause) {
@@ -45,6 +46,7 @@ public final class FilizerExceptions {
      *
      * @param path the file path
      * @param name the file name
+     * @param cause the original cause
      * @return the exception to throw
      */
     public IllegalArgumentException invalidFilePath(Path path, String name, Throwable cause) {
@@ -55,6 +57,7 @@ public final class FilizerExceptions {
      * Creates an exception for an invalid file name.
      *
      * @param name the file name
+     * @param cause the original cause
      * @return the exception to throw
      */
     public IllegalArgumentException invalidFileName(String name, Throwable cause) {

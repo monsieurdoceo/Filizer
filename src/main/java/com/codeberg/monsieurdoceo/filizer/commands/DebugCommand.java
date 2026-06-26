@@ -12,7 +12,7 @@ import org.bukkit.configuration.MemorySection;
 /**
  * Provides a development command for inspecting managed files.
  */
-public class TestCommand implements BasicCommand, CommandExecutor {
+public class DebugCommand implements BasicCommand, CommandExecutor {
 
     /**********************************************************/
     /*********************** PROPERTIES ***********************/
@@ -25,10 +25,10 @@ public class TestCommand implements BasicCommand, CommandExecutor {
     /*********************************************************/
 
     /**
-     * Creates a new {@link TestCommand} instance.
+     * Creates a new {@link DebugCommand} instance.
      * @param fileManager The file manager to use
      */
-    public TestCommand(FileManager fileManager) { this.fileManager = fileManager; }
+    public DebugCommand(FileManager fileManager) { this.fileManager = fileManager; }
 
     /*********************************************************/
     /*********************** FUNCTIONS ***********************/

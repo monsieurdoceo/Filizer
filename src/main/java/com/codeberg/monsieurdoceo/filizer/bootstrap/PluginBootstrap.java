@@ -1,6 +1,6 @@
 package com.codeberg.monsieurdoceo.filizer.bootstrap;
 
-import com.codeberg.monsieurdoceo.filizer.commands.TestCommand;
+import com.codeberg.monsieurdoceo.filizer.commands.DebugCommand;
 import com.codeberg.monsieurdoceo.filizer.storage.api.FileManager;
 import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
 import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
@@ -78,6 +78,6 @@ public final class PluginBootstrap {
      */
     private void registerCommands(FileManager fileManager) {
         PluginCommand checkCommand = plugin.getCommand("check");
-        if(checkCommand != null) checkCommand.setExecutor(new TestCommand(fileManager));
+        if(checkCommand != null) checkCommand.setExecutor(new DebugCommand(fileManager));
     }
 }

@@ -1,5 +1,6 @@
 package com.codeberg.monsieurdoceo.filizer;
 import com.codeberg.monsieurdoceo.filizer.bootstrap.PluginBootstrap;
+import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FilizerPlugin extends JavaPlugin {
@@ -9,6 +10,18 @@ public final class FilizerPlugin extends JavaPlugin {
     /**********************************************************/
 
     private PluginBootstrap bootstrap;
+
+    /**********************************************************/
+    /********************** CONSTRUCTORS **********************/
+    /**********************************************************/
+
+    /**
+     * Initializes the Filizer plugin instance.
+     *
+     * <p>Serves as the main entry point of the Filizer plugin.
+     * <p>No custom initialization is required.
+     */
+    public FilizerPlugin() {}
 
     /**********************************************************/
     /*********************** LIFE CYCLE ***********************/

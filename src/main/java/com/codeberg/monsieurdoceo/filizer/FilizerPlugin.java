@@ -1,6 +1,5 @@
 package com.codeberg.monsieurdoceo.filizer;
 import com.codeberg.monsieurdoceo.filizer.bootstrap.PluginBootstrap;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

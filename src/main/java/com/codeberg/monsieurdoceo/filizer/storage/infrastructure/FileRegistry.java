@@ -17,6 +17,17 @@ public final class FileRegistry {
 
     private final Map<String, CustomFile> customFiles = new ConcurrentHashMap<>();
 
+    /**********************************************************/
+    /********************** CONSTRUCTORS **********************/
+    /**********************************************************/
+
+    /**
+     * Initializes a new file registry instance.
+     *
+     * <p>No custom initialization is required.
+     */
+    public FileRegistry() {}
+
     /*********************************************************/
     /*********************** FUNCTIONS ***********************/
     /*********************************************************/

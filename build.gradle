@@ -5,20 +5,20 @@ plugins {
     id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
-group = 'com.codeberg.monsieurdoceo.filizer'
-version = '0.0.3'
+group = 'io.github.monsieurdoceo.filizer'
+version = '0.0.5'
 
 gradlePlugin {
-    website = 'https://codeberg.org/MonsieurDoceo/Filizer'
-    vcsUrl = 'https://codeberg.org/MonsieurDoceo/Filizer'
+    website = 'https://github.com/monsieurdoceo/Filizer'
+    vcsUrl = 'https://github.com/monsieurdoceo/Filizer'
 
     plugins {
         register('Filizer') {
-            id = 'com.codeberg.monsieurdoceo.filizer'
+            id = 'io.github.monsieurdoceo.filizer'
             displayName = 'Filizer'
             description = 'An Api to manage files on a server'
-            tags.set(['files', 'api', 'server', 'java', 'minecraft', 'gradle'])
-            implementationClass = 'com.codeberg.monsieurdoceo.filizer.FilizerPlugin'
+            tags.set(['files', 'api', 'server', 'java', 'minecraft'])
+            implementationClass = 'io.github.monsieurdoceo.filizer.FilizerPlugin'
             compatibility {
                 features {
                     configurationCache = true

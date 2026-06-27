@@ -1,6 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.storage.sync.strategy;
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+package io.github.monsieurdoceo.filizer.storage.sync.strategy;
+
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 
 /**
  * Synchronizes files using the Java WatchService API.
@@ -13,7 +14,9 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  * The watcher automatically reloads {@link CustomFile} instances whenever
  * their backing files are modified.
  */
-public final class WatchServiceSynchronizationStrategy implements FileSynchronizationStrategy {
+public final class WatchServiceSynchronizationStrategy
+    implements FileSynchronizationStrategy
+{
 
     /**
      * Creates a new {@link WatchServiceSynchronizationStrategy} instance.
@@ -32,7 +35,6 @@ public final class WatchServiceSynchronizationStrategy implements FileSynchroniz
      */
     @Override
     public void synchronize(CustomFile file) {
-
         /*
          * TODO:
          *
@@ -59,5 +61,4 @@ public final class WatchServiceSynchronizationStrategy implements FileSynchroniz
          * since synchronization becomes completely event-driven.
          */
     }
-
 }

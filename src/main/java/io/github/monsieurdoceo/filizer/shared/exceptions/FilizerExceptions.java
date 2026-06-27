@@ -1,6 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer.shared.exceptions;
+package io.github.monsieurdoceo.filizer.shared.exceptions;
 
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
 import java.nio.file.Path;
 import java.util.Objects;
 
@@ -16,10 +16,12 @@ public final class FilizerExceptions {
 
     /**
      * Creates a new exception factory.
-     *  
+     *
      * @param logger the application logger
      */
-    public FilizerExceptions(AppLogger logger) { this.logger = Objects.requireNonNull(logger, "logger"); }
+    public FilizerExceptions(AppLogger logger) {
+        this.logger = Objects.requireNonNull(logger, "logger");
+    }
 
     /**
      * Creates an exception for a missing file.
@@ -40,8 +42,17 @@ public final class FilizerExceptions {
      * @param cause the original cause
      * @return the exception to throw
      */
-    public IllegalArgumentException invalidFilePath(Path path, String name, Throwable cause) {
-        return new FilizerInvalidFilePathException(this.logger, path, name, cause);
+    public IllegalArgumentException invalidFilePath(
+        Path path,
+        String name,
+        Throwable cause
+    ) {
+        return new FilizerInvalidFilePathException(
+            this.logger,
+            path,
+            name,
+            cause
+        );
     }
 
     /**
@@ -51,7 +62,10 @@ public final class FilizerExceptions {
      * @param cause the original cause
      * @return the exception to throw
      */
-    public IllegalArgumentException invalidFileName(String name, Throwable cause) {
+    public IllegalArgumentException invalidFileName(
+        String name,
+        Throwable cause
+    ) {
         return new FilizerInvalidFileNameException(this.logger, name, cause);
     }
 
@@ -63,7 +77,11 @@ public final class FilizerExceptions {
      * @param cause the original cause
      * @return the exception to throw
      */
-    public IllegalStateException fileCreationFailed(Path path, String name, Throwable cause) {
+    public IllegalStateException fileCreationFailed(
+        Path path,
+        String name,
+        Throwable cause
+    ) {
         return new FilizerFileCreationException(this.logger, path, name, cause);
     }
 
@@ -74,7 +92,10 @@ public final class FilizerExceptions {
      * @param cause the original cause
      * @return the exception to throw
      */
-    public IllegalStateException fileDeletionFailed(String name, Throwable cause) {
+    public IllegalStateException fileDeletionFailed(
+        String name,
+        Throwable cause
+    ) {
         return new FilizerFileDeletionException(this.logger, name, cause);
     }
 
@@ -94,5 +115,7 @@ public final class FilizerExceptions {
      *
      * @param name the file name
      */
-    public void ambiguousFileName(String name) { this.logger.warn("Ambiguous file name lookup ignored for: " + name); }
+    public void ambiguousFileName(String name) {
+        this.logger.warn("Ambiguous file name lookup ignored for: " + name);
+    }
 }

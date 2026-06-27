@@ -1,6 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer.shared.exceptions;
+package io.github.monsieurdoceo.filizer.shared.exceptions;
 
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
 import java.util.Objects;
 
 /**
@@ -15,7 +15,11 @@ public final class FilizerFileDeletionException extends IllegalStateException {
      * @param name the file name
      * @param cause the original cause
      */
-    public FilizerFileDeletionException(AppLogger logger, String name, Throwable cause) {
+    public FilizerFileDeletionException(
+        AppLogger logger,
+        String name,
+        Throwable cause
+    ) {
         super(message(Objects.requireNonNull(logger, "logger"), name, cause));
     }
 
@@ -27,8 +31,15 @@ public final class FilizerFileDeletionException extends IllegalStateException {
      * @param cause the original cause
      * @return the exception message
      */
-    private static String message(AppLogger logger, String name, Throwable cause) {
-        logger.error("IO Error deleting " + name + ": " + cause.getMessage(), cause);
+    private static String message(
+        AppLogger logger,
+        String name,
+        Throwable cause
+    ) {
+        logger.error(
+            "IO Error deleting " + name + ": " + cause.getMessage(),
+            cause
+        );
         return logger.getCurrentlyLoggedMessage();
     }
 }

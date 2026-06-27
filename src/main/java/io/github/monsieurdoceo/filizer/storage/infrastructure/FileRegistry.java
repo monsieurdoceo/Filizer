@@ -1,13 +1,12 @@
-package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
+package io.github.monsieurdoceo.filizer.storage.infrastructure;
 
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
-
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.nio.file.Path;
 
 /**
  * Maintains the registry of managed files.
@@ -20,7 +19,8 @@ public final class FileRegistry {
     /**
      * The map of stored files.
      */
-    private final Map<String, CustomFile> customFiles = new ConcurrentHashMap<>();
+    private final Map<String, CustomFile> customFiles =
+        new ConcurrentHashMap<>();
 
     /**
      * Initializes a new file registry instance.
@@ -36,7 +36,10 @@ public final class FileRegistry {
      * @return {@code true} if file exists, otherwise {@code false}
      */
     public boolean contains(CustomFile customFile) {
-        return customFile != null && this.customFiles.containsKey(keyOf(customFile.getFile().toPath()));
+        return (
+            customFile != null &&
+            this.customFiles.containsKey(keyOf(customFile.getFile().toPath()))
+        );
     }
 
     /**
@@ -45,8 +48,11 @@ public final class FileRegistry {
      * @param customFile the file to store
      */
     public void add(CustomFile customFile) {
-        if(customFile != null) {
-            this.customFiles.putIfAbsent(keyOf(customFile.getFile().toPath()), customFile);
+        if (customFile != null) {
+            this.customFiles.putIfAbsent(
+                keyOf(customFile.getFile().toPath()),
+                customFile
+            );
         }
     }
 
@@ -56,7 +62,9 @@ public final class FileRegistry {
      * @param name of the file to remove
      */
     public void remove(String name) {
-        findByName(name).forEach(file -> this.customFiles.remove(keyOf(file.getFile().toPath())));
+        findByName(name).forEach(file ->
+            this.customFiles.remove(keyOf(file.getFile().toPath()))
+        );
     }
 
     /**
@@ -64,7 +72,9 @@ public final class FileRegistry {
      *
      * @param path of the file to remove
      */
-    public void remove(Path path) { this.customFiles.remove(keyOf(path)); }
+    public void remove(Path path) {
+        this.customFiles.remove(keyOf(path));
+    }
 
     /**
      * Remove the given {@link CustomFile} from storage.
@@ -75,7 +85,9 @@ public final class FileRegistry {
      * @param customFile the file to remove
      */
     public void remove(CustomFile customFile) {
-        if(customFile != null) this.customFiles.remove(keyOf(customFile.getFile().toPath()));
+        if (customFile != null) this.customFiles.remove(
+            keyOf(customFile.getFile().toPath())
+        );
     }
 
     /**
@@ -84,7 +96,9 @@ public final class FileRegistry {
      * @param path the file path
      * @return the matching file, if present
      */
-    public Optional<CustomFile> find(Path path) { return Optional.ofNullable(customFiles.get(keyOf(path))); }
+    public Optional<CustomFile> find(Path path) {
+        return Optional.ofNullable(customFiles.get(keyOf(path)));
+    }
 
     /**
      * Retrieves a {@link CustomFile} by its path.
@@ -92,7 +106,9 @@ public final class FileRegistry {
      * @param file the file
      * @return the matching file, if present
      */
-    public Optional<CustomFile> find(File file) { return file == null ? Optional.empty() : find(file.toPath()); }
+    public Optional<CustomFile> find(File file) {
+        return file == null ? Optional.empty() : find(file.toPath());
+    }
 
     /**
      * Retrieves every {@link CustomFile} matching the provided name.
@@ -101,9 +117,11 @@ public final class FileRegistry {
      * @return all matching files
      */
     public Collection<CustomFile> findByName(String name) {
-        return this.customFiles.values().stream()
-                .filter(customFile -> customFile.getName().equals(name))
-                .toList();
+        return this.customFiles
+            .values()
+            .stream()
+            .filter(customFile -> customFile.getName().equals(name))
+            .toList();
     }
 
     /**
@@ -111,7 +129,9 @@ public final class FileRegistry {
      *
      * @return a collection containing all stored files
      */
-    public Collection<CustomFile> getFiles() { return this.customFiles.values(); }
+    public Collection<CustomFile> getFiles() {
+        return this.customFiles.values();
+    }
 
     /**
      * Builds the storage key for a path.
@@ -119,5 +139,7 @@ public final class FileRegistry {
      * @param path the file path
      * @return the normalized absolute key
      */
-    private static String keyOf(Path path) { return path.toAbsolutePath().normalize().toString(); }
+    private static String keyOf(Path path) {
+        return path.toAbsolutePath().normalize().toString();
+    }
 }

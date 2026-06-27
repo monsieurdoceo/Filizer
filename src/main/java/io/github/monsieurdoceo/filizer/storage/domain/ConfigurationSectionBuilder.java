@@ -1,9 +1,8 @@
-package com.codeberg.monsieurdoceo.filizer.storage.domain;
+package io.github.monsieurdoceo.filizer.storage.domain;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -76,12 +75,16 @@ public class ConfigurationSectionBuilder {
      *
      * @return the section name
      */
-    public String getName() { return this.name; }
+    public String getName() {
+        return this.name;
+    }
 
     /**
      * Returns the data stored in this section.
      *
      * @return the section's key-value mappings
      */
-    public Map<String, Object> getData() { return this.data; }
+    public Map<String, Object> getData() {
+        return this.data;
+    }
 }

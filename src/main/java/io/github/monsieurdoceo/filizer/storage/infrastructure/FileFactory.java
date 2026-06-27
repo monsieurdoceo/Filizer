@@ -1,7 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
+package io.github.monsieurdoceo.filizer.storage.infrastructure;
 
-import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
-import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
+import io.github.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
+import io.github.monsieurdoceo.filizer.shared.util.FileChecker;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,18 +36,28 @@ public final class FileFactory {
      * @throws IllegalArgumentException if the file name is invalid
      * @throws IllegalStateException if an I/O error occurs while creating the file
      */
-    public static File createFile(final Path path, final String name, final FilizerExceptions errors) {
-
+    public static File createFile(
+        final Path path,
+        final String name,
+        final FilizerExceptions errors
+    ) {
         Objects.requireNonNull(errors, "errors");
 
-        if(!FileChecker.hasValidName(name)) throw errors.invalidFileName(name, null);
+        if (!FileChecker.hasValidName(name)) throw errors.invalidFileName(
+            name,
+            null
+        );
 
         Path filePath = path.resolve(name);
 
         try {
-            if(!FileChecker.exists(filePath.getParent())) Files.createDirectories(filePath.getParent());
-            if(!FileChecker.exists(filePath)) Files.createFile(filePath);
+            if (
+                !FileChecker.exists(filePath.getParent())
+            ) Files.createDirectories(filePath.getParent());
+            if (!FileChecker.exists(filePath)) Files.createFile(filePath);
             return filePath.toFile();
-        } catch(IOException e) { throw errors.fileCreationFailed(path, name, e); }
+        } catch (IOException e) {
+            throw errors.fileCreationFailed(path, name, e);
+        }
     }
 }

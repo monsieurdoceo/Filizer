@@ -1,6 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.storage.sync.strategy;
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+package io.github.monsieurdoceo.filizer.storage.sync.strategy;
+
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 
 /**
  * Never synchronizes files.
@@ -8,7 +9,9 @@ import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrate
  * <p>This strategy assumes that files cannot be modified
  * externally.
  */
-public final class NeverSynchronizationStrategy implements FileSynchronizationStrategy {
+public final class NeverSynchronizationStrategy
+    implements FileSynchronizationStrategy
+{
 
     /**
      * Creates a new {@link NeverSynchronizationStrategy} instance.
@@ -23,5 +26,7 @@ public final class NeverSynchronizationStrategy implements FileSynchronizationSt
      * @param file ignored
      */
     @Override
-    public void synchronize(CustomFile file) {/* Intentionally left blank. */}
+    public void synchronize(CustomFile file) {
+        /* Intentionally left blank. */
+    }
 }

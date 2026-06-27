@@ -1,6 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer.shared.exceptions;
+package io.github.monsieurdoceo.filizer.shared.exceptions;
 
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
 import java.nio.file.Path;
 import java.util.Objects;
 
@@ -17,7 +17,12 @@ public final class FilizerFileCreationException extends IllegalStateException {
      * @param name the file name
      * @param cause the original cause
      */
-    public FilizerFileCreationException(AppLogger logger, Path path, String name, Throwable cause) {
+    public FilizerFileCreationException(
+        AppLogger logger,
+        Path path,
+        String name,
+        Throwable cause
+    ) {
         super(message(Objects.requireNonNull(logger, "logger"), name, cause));
     }
 
@@ -29,7 +34,11 @@ public final class FilizerFileCreationException extends IllegalStateException {
      * @param cause the original cause
      * @return the exception message
      */
-    private static String message(AppLogger logger, String name, Throwable cause) {
+    private static String message(
+        AppLogger logger,
+        String name,
+        Throwable cause
+    ) {
         logger.error("Critical I/O error for " + name, cause);
         return logger.getCurrentlyLoggedMessage();
     }

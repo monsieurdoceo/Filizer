@@ -1,12 +1,12 @@
-package com.codeberg.monsieurdoceo.filizer.storage.sync;
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
+package io.github.monsieurdoceo.filizer.storage.sync;
+
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
 
 /**
  * Defines how a {@link CustomFile} should be synchronized
  * with its underlying filesystem representation.
  */
 public interface FileSynchronizationStrategy {
-
     /**
      * Synchronizes the given file if required.
      *

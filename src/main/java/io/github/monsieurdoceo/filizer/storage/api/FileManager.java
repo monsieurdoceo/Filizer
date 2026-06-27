@@ -1,6 +1,12 @@
-package com.codeberg.monsieurdoceo.filizer.storage.api;
+package io.github.monsieurdoceo.filizer.storage.api;
 
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.util.FileChecker;
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,13 +15,6 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
-import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
-import com.codeberg.monsieurdoceo.filizer.shared.util.FileChecker;
 
 /**
  * Provides access to managed files.
@@ -51,7 +50,11 @@ public final class FileManager {
      * @param strategy The synchronization strategy to use
      * @param logger the application logger
      */
-    public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy, AppLogger logger) {
+    public FileManager(
+        FileRegistry registry,
+        FileSynchronizationStrategy strategy,
+        AppLogger logger
+    ) {
         this(registry, strategy, logger, new FilizerExceptions(logger));
     }
 
@@ -62,7 +65,12 @@ public final class FileManager {
      * @param logger the application logger
      * @param errors the exception factory to use
      */
-    public FileManager(FileRegistry registry, FileSynchronizationStrategy strategy, AppLogger logger, FilizerExceptions errors) {
+    public FileManager(
+        FileRegistry registry,
+        FileSynchronizationStrategy strategy,
+        AppLogger logger,
+        FilizerExceptions errors
+    ) {
         this.fileRegistry = registry;
         this.synchronizer = new FileSynchronizer(strategy);
         this.logger = logger;
@@ -75,7 +83,9 @@ public final class FileManager {
      * @param name the file name to search for
      * @return {@code true} if the file exists, {@code false} otherwise
      */
-    public boolean containsFile(String name) { return findFile(name).isPresent(); }
+    public boolean containsFile(String name) {
+        return findFile(name).isPresent();
+    }
 
     /**
      * Attempts to retrieve a registered file by its name.
@@ -84,15 +94,14 @@ public final class FileManager {
      * @return the matching file, if present
      */
     public Optional<CustomFile> findFile(String name) {
-
-        if(!FileChecker.hasValidName(name)) {
+        if (!FileChecker.hasValidName(name)) {
             this.logger.warn("The name of the file can't be null or empty.");
             return Optional.empty();
         }
 
         Collection<CustomFile> matches = this.fileRegistry.findByName(name);
-        if(matches.size() == 1) return Optional.of(matches.iterator().next());
-        if(matches.size() > 1) this.errors.ambiguousFileName(name);
+        if (matches.size() == 1) return Optional.of(matches.iterator().next());
+        if (matches.size() > 1) this.errors.ambiguousFileName(name);
         return Optional.empty();
     }
 
@@ -104,7 +113,9 @@ public final class FileManager {
      * @return the matching file, if present
      */
     public Optional<CustomFile> findFile(Path path, String name) {
-        if(path == null || !FileChecker.hasValidName(name)) return Optional.empty();
+        if (
+            path == null || !FileChecker.hasValidName(name)
+        ) return Optional.empty();
         return this.fileRegistry.find(path.resolve(name));
     }
 
@@ -116,7 +127,9 @@ public final class FileManager {
      * @throws IllegalArgumentException if the file does not exist
      */
     public CustomFile requireFile(String name) {
-        return findFile(name).orElseThrow(() -> this.errors.fileNotFound(name, null));
+        return findFile(name).orElseThrow(() ->
+            this.errors.fileNotFound(name, null)
+        );
     }
 
     /**
@@ -127,11 +140,17 @@ public final class FileManager {
      * @return The created or existing {@link CustomFile}
      */
     private CustomFile addFile(Path path, String name) {
-
-        if(path == null || !FileChecker.hasValidName(name)) throw this.errors.invalidFilePath(path, name, null);
+        if (
+            path == null || !FileChecker.hasValidName(name)
+        ) throw this.errors.invalidFilePath(path, name, null);
 
         return findFile(path, name).orElseGet(() -> {
-            CustomFile customFile = new CustomFile(path, name, this.synchronizer, this.errors);
+            CustomFile customFile = new CustomFile(
+                path,
+                name,
+                this.synchronizer,
+                this.errors
+            );
             this.fileRegistry.add(customFile);
             return customFile;
         });
@@ -144,7 +163,9 @@ public final class FileManager {
      * @param name the file name
      * @return the created {@link CustomFile}
      */
-    public CustomFile createFile(String path, String name) { return addFile(Paths.get(path), name); }
+    public CustomFile createFile(String path, String name) {
+        return addFile(Paths.get(path), name);
+    }
 
     /**
      * Creates a new {@link CustomFile} from a parent directory and file name.
@@ -156,14 +177,18 @@ public final class FileManager {
      * @param name the file name
      * @return the created {@link CustomFile}
      */
-    public CustomFile createFile(File parent, String name) { return addFile(parent.toPath(), name); }
+    public CustomFile createFile(File parent, String name) {
+        return addFile(parent.toPath(), name);
+    }
 
     /**
      * Removes a {@link CustomFile} from storage by this name.
      *
      * @param name the file name
      */
-    public void removeFile(String name) { this.fileRegistry.remove(name); }
+    public void removeFile(String name) {
+        this.fileRegistry.remove(name);
+    }
 
     /**
      * Removes a file from storage by its path and name.
@@ -172,7 +197,7 @@ public final class FileManager {
      * @param name the file name
      */
     public void removeFile(Path path, String name) {
-        if(path != null && FileChecker.hasValidName(name)) {
+        if (path != null && FileChecker.hasValidName(name)) {
             this.fileRegistry.remove(path.resolve(name));
         }
     }
@@ -185,7 +210,9 @@ public final class FileManager {
      *
      * @param customFile the file to remove
      */
-    public void removeFile(CustomFile customFile) { this.fileRegistry.remove(customFile); }
+    public void removeFile(CustomFile customFile) {
+        this.fileRegistry.remove(customFile);
+    }
 
     /**
      * Recursively stores all regular files found under the given root path.
@@ -197,9 +224,13 @@ public final class FileManager {
      * be accessed
      */
     public void storeAllFiles(Path root) throws IOException {
-        if(Files.notExists(root)) Files.createDirectories(root);
-        try(Stream<Path> paths = Files.walk(root)) {
-            paths.filter(Files::isRegularFile).forEach(path -> addFile(path.getParent(), path.getFileName().toString()));
+        if (Files.notExists(root)) Files.createDirectories(root);
+        try (Stream<Path> paths = Files.walk(root)) {
+            paths
+                .filter(Files::isRegularFile)
+                .forEach(path ->
+                    addFile(path.getParent(), path.getFileName().toString())
+                );
         }
     }
 
@@ -211,9 +242,7 @@ public final class FileManager {
      * otherwise {@code false}
      */
     public boolean deleteFile(String name) {
-        return findFile(name)
-                .map(this::deleteFile)
-                .orElse(false);
+        return findFile(name).map(this::deleteFile).orElse(false);
     }
 
     /**
@@ -228,17 +257,18 @@ public final class FileManager {
      * otherwise {@code false}
      */
     public boolean deleteFile(CustomFile customFile) {
-
-        if(customFile == null) return false;
+        if (customFile == null) return false;
 
         try {
             Path path = customFile.getFile().toPath();
 
-            if(Files.deleteIfExists(path)) {
+            if (Files.deleteIfExists(path)) {
                 removeFile(customFile);
                 return true;
             }
-        } catch(IOException e) { throw this.errors.fileDeletionFailed(customFile.getName(), e); }
+        } catch (IOException e) {
+            throw this.errors.fileDeletionFailed(customFile.getName(), e);
+        }
 
         return false;
     }
@@ -247,11 +277,15 @@ public final class FileManager {
      * Retrieves the underlying file storage instance.
      * @return the file storage
      */
-    public FileRegistry getRegistry() { return this.fileRegistry; }
+    public FileRegistry getRegistry() {
+        return this.fileRegistry;
+    }
 
     /**
      * Retrieves the file synchronization instance.
      * @return the file synchronization instance
      */
-    public FileSynchronizer getSynchronizer() { return this.synchronizer; }
+    public FileSynchronizer getSynchronizer() {
+        return this.synchronizer;
+    }
 }

@@ -1,10 +1,9 @@
-package com.codeberg.monsieurdoceo.filizer.shared.logging;
+package io.github.monsieurdoceo.filizer.shared.logging;
 
 /**
  * Application-level logger abstraction.
  */
 public interface AppLogger {
-
     /**
      * Gets the currently logged message.
      * @return the currently logged message

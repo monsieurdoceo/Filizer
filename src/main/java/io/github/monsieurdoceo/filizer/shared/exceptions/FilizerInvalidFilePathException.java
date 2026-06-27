@@ -1,13 +1,15 @@
-package com.codeberg.monsieurdoceo.filizer.shared.exceptions;
+package io.github.monsieurdoceo.filizer.shared.exceptions;
 
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
 import java.nio.file.Path;
 import java.util.Objects;
 
 /**
  * Thrown when a file path or file name is invalid.
  */
-public final class FilizerInvalidFilePathException extends IllegalArgumentException {
+public final class FilizerInvalidFilePathException
+    extends IllegalArgumentException
+{
 
     /**
      * Creates a new invalid-file-path exception.
@@ -17,8 +19,21 @@ public final class FilizerInvalidFilePathException extends IllegalArgumentExcept
      * @param name the file name
      * @param cause the original cause
      */
-    public FilizerInvalidFilePathException(AppLogger logger, Path path, String name, Throwable cause) {
-        super(message(Objects.requireNonNull(logger, "logger"), path, name, cause), cause);
+    public FilizerInvalidFilePathException(
+        AppLogger logger,
+        Path path,
+        String name,
+        Throwable cause
+    ) {
+        super(
+            message(
+                Objects.requireNonNull(logger, "logger"),
+                path,
+                name,
+                cause
+            ),
+            cause
+        );
     }
 
     /**
@@ -29,7 +44,12 @@ public final class FilizerInvalidFilePathException extends IllegalArgumentExcept
      * @param cause  the original cause
      * @return the exception message
      */
-    private static String message(AppLogger logger, Path path, String name, Throwable cause) {
+    private static String message(
+        AppLogger logger,
+        Path path,
+        String name,
+        Throwable cause
+    ) {
         logger.error("Invalid file path or name: " + path + "/" + name, cause);
         return logger.getCurrentlyLoggedMessage();
     }

@@ -1,4 +1,4 @@
-package com.codeberg.monsieurdoceo.filizer.shared.logging;
+package io.github.monsieurdoceo.filizer.shared.logging;
 
 import java.util.Objects;
 import java.util.logging.Level;
@@ -29,13 +29,17 @@ public final class BukkitAppLogger implements AppLogger {
      *
      * @param logger the Bukkit logger
      */
-    public BukkitAppLogger(Logger logger) { this.logger = Objects.requireNonNull(logger, "logger"); }
+    public BukkitAppLogger(Logger logger) {
+        this.logger = Objects.requireNonNull(logger, "logger");
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getCurrentlyLoggedMessage() { return this.loggedMessage; }
+    public String getCurrentlyLoggedMessage() {
+        return this.loggedMessage;
+    }
 
     /**
      * {@inheritDoc}

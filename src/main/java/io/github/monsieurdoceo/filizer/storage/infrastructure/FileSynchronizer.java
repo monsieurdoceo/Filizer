@@ -1,8 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.storage.infrastructure;
+package io.github.monsieurdoceo.filizer.storage.infrastructure;
 
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
-
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 import java.util.Objects;
 
 /**
@@ -30,5 +29,7 @@ public final class FileSynchronizer {
      *
      * @param file the file to synchronize
      */
-    public void ensureUpToDate(CustomFile file) { this.strategy.synchronize(file); }
+    public void ensureUpToDate(CustomFile file) {
+        this.strategy.synchronize(file);
+    }
 }

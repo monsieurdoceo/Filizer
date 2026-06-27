@@ -1,10 +1,9 @@
-package com.codeberg.monsieurdoceo.filizer.storage.domain;
+package io.github.monsieurdoceo.filizer.storage.domain;
 
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileFactory;
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileReader;
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
-import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
-
+import io.github.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileFactory;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileReader;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileSynchronizer;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -64,9 +63,18 @@ public class CustomFile {
      * @param synchronizer the synchronization service to use
      * @param errors the exception factory
      */
-    public CustomFile(final Path path, final String name, final FileSynchronizer synchronizer, final FilizerExceptions errors) {
+    public CustomFile(
+        final Path path,
+        final String name,
+        final FileSynchronizer synchronizer,
+        final FilizerExceptions errors
+    ) {
         this.name = name;
-        this.file = FileFactory.createFile(path, name, Objects.requireNonNull(errors, "errors"));
+        this.file = FileFactory.createFile(
+            path,
+            name,
+            Objects.requireNonNull(errors, "errors")
+        );
         this.synchronizer = synchronizer;
         this.errors = errors;
         reload();
@@ -80,7 +88,12 @@ public class CustomFile {
      * @param synchronizer the synchronization service to use
      * @param errors the exception factory
      */
-    public CustomFile(final File parent, final String name, final FileSynchronizer synchronizer, final FilizerExceptions errors) {
+    public CustomFile(
+        final File parent,
+        final String name,
+        final FileSynchronizer synchronizer,
+        final FilizerExceptions errors
+    ) {
         this.name = name;
         this.file = FileFactory.createFile(parent.toPath(), name, errors);
         this.synchronizer = synchronizer;
@@ -97,7 +110,9 @@ public class CustomFile {
         try {
             this.config.save(this.file);
             this.lastModified = this.file.lastModified();
-        } catch(Exception e) { throw this.errors.fileSaveFailed(this.name, e); }
+        } catch (Exception e) {
+            throw this.errors.fileSaveFailed(this.name, e);
+        }
     }
 
     /**
@@ -118,7 +133,9 @@ public class CustomFile {
     /**
      * Ensures that the file is synchronized with
      */
-    private void sync() { if(this.synchronizer != null) this.synchronizer.ensureUpToDate(this); }
+    private void sync() {
+        if (this.synchronizer != null) this.synchronizer.ensureUpToDate(this);
+    }
 
     /**
      * Retrieves the cached {@link FileReader} instance.
@@ -193,19 +210,25 @@ public class CustomFile {
      *
      * @return the file name
      */
-    public String getName() { return this.name; }
+    public String getName() {
+        return this.name;
+    }
 
     /**
      * Retrieves the underlying file instance.
      *
      * @return the backing file
      */
-    public File getFile() { return this.file; }
+    public File getFile() {
+        return this.file;
+    }
 
     /**
      * Returns the last modified timestamp of the file.
      *
      * @return the last modified timestamp
      */
-    public long getLastModified() { return this.lastModified; }
+    public long getLastModified() {
+        return this.lastModified;
+    }
 }

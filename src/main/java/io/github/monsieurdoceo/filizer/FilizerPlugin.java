@@ -1,5 +1,6 @@
-package com.codeberg.monsieurdoceo.filizer;
-import com.codeberg.monsieurdoceo.filizer.bootstrap.PluginBootstrap;
+package io.github.monsieurdoceo.filizer;
+
+import io.github.monsieurdoceo.filizer.bootstrap.PluginBootstrap;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,6 +38,6 @@ public final class FilizerPlugin extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        if(this.bootstrap != null) this.bootstrap.stop();
+        if (this.bootstrap != null) this.bootstrap.stop();
     }
 }

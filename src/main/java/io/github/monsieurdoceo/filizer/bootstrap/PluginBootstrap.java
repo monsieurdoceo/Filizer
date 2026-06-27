@@ -1,13 +1,13 @@
-package com.codeberg.monsieurdoceo.filizer.bootstrap;
+package io.github.monsieurdoceo.filizer.bootstrap;
 
-import com.codeberg.monsieurdoceo.filizer.commands.DebugCommand;
-import com.codeberg.monsieurdoceo.filizer.storage.api.FileManager;
-import com.codeberg.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
-import com.codeberg.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
-import com.codeberg.monsieurdoceo.filizer.shared.logging.AppLogger;
-import com.codeberg.monsieurdoceo.filizer.shared.logging.BukkitAppLogger;
+import io.github.monsieurdoceo.filizer.commands.DebugCommand;
+import io.github.monsieurdoceo.filizer.shared.exceptions.FilizerExceptions;
+import io.github.monsieurdoceo.filizer.shared.logging.AppLogger;
+import io.github.monsieurdoceo.filizer.shared.logging.BukkitAppLogger;
+import io.github.monsieurdoceo.filizer.storage.api.FileManager;
+import io.github.monsieurdoceo.filizer.storage.infrastructure.FileRegistry;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+import io.github.monsieurdoceo.filizer.storage.sync.strategy.LastModifiedStrategy;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,13 +48,14 @@ public final class PluginBootstrap {
      * Creates a new {@link PluginBootstrap} instance.
      * @param plugin The plugin to bootstrap
      */
-    public PluginBootstrap(JavaPlugin plugin) { this.plugin = plugin; }
+    public PluginBootstrap(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * Starts the plugin.
      */
     public void start() {
-
         /* <!> Initialize the logger and error handler <!> */
         this.logger = new BukkitAppLogger(this.plugin.getLogger());
         this.errors = new FilizerExceptions(this.logger);
@@ -62,7 +63,12 @@ public final class PluginBootstrap {
         /* <!> Initialize the file manager <!> */
         this.registry = new FileRegistry();
         FileSynchronizationStrategy strategy = new LastModifiedStrategy(); // <- Use 'LastModifiedStrategy'
-        this.fileManager = new FileManager(this.registry, strategy, this.logger, this.errors);
+        this.fileManager = new FileManager(
+            this.registry,
+            strategy,
+            this.logger,
+            this.errors
+        );
 
         // Register the commands
         registerCommands(this.fileManager);
@@ -85,6 +91,8 @@ public final class PluginBootstrap {
      */
     private void registerCommands(FileManager fileManager) {
         PluginCommand checkCommand = plugin.getCommand("check");
-        if(checkCommand != null) checkCommand.setExecutor(new DebugCommand(fileManager));
+        if (checkCommand != null) checkCommand.setExecutor(
+            new DebugCommand(fileManager)
+        );
     }
 }

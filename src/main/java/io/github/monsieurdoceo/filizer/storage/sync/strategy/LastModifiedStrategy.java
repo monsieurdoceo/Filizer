@@ -1,6 +1,7 @@
-package com.codeberg.monsieurdoceo.filizer.storage.sync.strategy;
-import com.codeberg.monsieurdoceo.filizer.storage.domain.CustomFile;
-import com.codeberg.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
+package io.github.monsieurdoceo.filizer.storage.sync.strategy;
+
+import io.github.monsieurdoceo.filizer.storage.domain.CustomFile;
+import io.github.monsieurdoceo.filizer.storage.sync.FileSynchronizationStrategy;
 
 /**
  * Synchronizes files using the filesystem last modified timestamp.
@@ -20,5 +21,9 @@ public final class LastModifiedStrategy implements FileSynchronizationStrategy {
      * @param file the file to synchronize
      */
     @Override
-    public void synchronize(CustomFile file) { if(file.getFile().lastModified() > file.getLastModified()) file.reload(); }
+    public void synchronize(CustomFile file) {
+        if (
+            file.getFile().lastModified() > file.getLastModified()
+        ) file.reload();
+    }
 }

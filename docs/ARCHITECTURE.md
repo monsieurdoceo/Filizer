@@ -1,155 +1,239 @@
-# Filizer - Architecture overview
+# Architecture
 
-## Goal of the project
+How Filizer is put together, and why.
 
-Filizer is a small Bukkit/Paper plugin focused on file management.
-The codebase is organized so that the plugin entry point stays thin, while the file logic, logging, and error handling live in dedicated packages.
+> This page explains the design. For the list of classes and methods, see
+> the [API Reference](API_REFERENCE.md). For planned work, see the
+> [Roadmap](ROADMAP.md).
 
-## Current structure
+---
 
-### Startup and wiring
+## Table of contents
 
-- `FilizerPlugin` is the Bukkit entry point.
-- `PluginBootstrap` creates and wires the runtime objects.
-- The bootstrap initializes:
-  - the application logger
-  - the exception factory
-  - the file registry
-  - the file manager
-  - the command bindings
+- [Goal](#goal)
+- [Layers](#layers)
+- [Dependency flow](#dependency-flow)
+- [Lifecycle](#lifecycle)
+- [Design decisions](#design-decisions)
+- [Threading model](#threading-model)
+- [Extension points](#extension-points)
+- [Known limitations](#known-limitations)
 
-### File management
+---
 
-- `storage/api/FileManager` is the main facade used by commands and future services.
-- It handles:
-  - file lookup
-  - file creation
-  - file registration
-  - deletion
-  - directory scanning
-  - synchronization delegation
+## Goal
 
-### File model
+Filizer wraps YAML configuration handling for Paper / Bukkit plugins so
+that consumers never write file plumbing themselves.
 
-- `storage/domain/CustomFile` represents one managed file.
-- It stores the file state and the loaded YAML configuration.
-- It exposes the main read/write operations on the file content.
+The guiding constraint is that **the plugin entry point stays thin**. The
+Bukkit lifecycle is an adapter, not the place where logic lives. Everything
+that matters — file handling, logging, error construction — sits in plain
+Java classes that can be instantiated and tested without a running server.
 
-### Infrastructure
+A consequence worth stating explicitly: `FileManager` and everything it
+depends on can be constructed with `new`. Filizer is usable as a library,
+not only as a plugin.
 
-- `storage/infrastructure/FileFactory` creates files on disk.
-- `storage/infrastructure/FileReader` wraps configuration reads.
-- `storage/infrastructure/FileRegistry` stores the managed files in memory.
-- `storage/infrastructure/FileSynchronizer` delegates synchronization to a strategy.
+---
 
-### Synchronization
+## Layers
 
-- `storage/sync/FileSynchronizationStrategy` is the contract for sync behavior.
-- Implementations currently available:
-  - `LastModifiedStrategy`
-  - `NeverSynchronizationStrategy`
-  - `WatchServiceSynchronizationStrategy`
+The `storage` package follows a ports-and-adapters split. Each layer only
+knows about the ones beneath it.
 
-### Shared concerns
+| Layer | Package | Role |
+| --- | --- | --- |
+| **API** | `storage/api` | The public surface. `FileManager` is the only entry point consumers need. |
+| **Domain** | `storage/domain` | What a managed file *is*: `CustomFile`, `ConfigurationSectionBuilder`. |
+| **Infrastructure** | `storage/infrastructure` | How it touches the outside world: `FileFactory` (disk writes), `FileReader` (config reads), `FileRegistry` (in-memory store), `FileSynchronizer` (staleness checks). |
+| **Sync** | `storage/sync` | The strategy contract and its implementations. |
 
-- `shared/logging` contains the application logger abstraction and the Bukkit adapter.
-- `shared/exceptions` contains the centralized exception factory and the specific exception types.
-- `shared/util/FileChecker` contains basic file-name and path helpers.
+Two cross-cutting packages sit outside that stack:
 
-## What is already in place
+| Package | Role |
+| --- | --- |
+| `shared/logging` | `AppLogger` abstraction + `BukkitAppLogger` adapter. |
+| `shared/exceptions` | `FilizerExceptions` factory + the typed exceptions it builds. |
 
-- The plugin entry point is separated from the bootstrap logic.
-- Logging is centralized instead of being scattered through the codebase.
-- Exceptions are centralized and typed.
-- The file registry is no longer used as a global singleton in the normal runtime flow.
-- Files are indexed by normalized absolute path, which avoids collisions between same-name files in different folders.
-- The project compiles successfully.
+And two Bukkit-facing ones:
 
-## What needs attention
+| Package | Role |
+| --- | --- |
+| `bootstrap` | `PluginBootstrap` — constructs and wires every runtime object. |
+| `commands` | Bukkit command entry points. |
 
-### 1. WatchService strategy
+---
 
-`WatchServiceSynchronizationStrategy` is present, but it is still the part to treat with the most care if you want real event-driven sync.
+## Dependency flow
 
-Recommended follow-up:
-- create and manage a single watcher
-- register parent directories for managed files
-- react to file create / modify / delete events
-- reload the matching `CustomFile`
-- close the watcher cleanly on shutdown
+```text
+FilizerPlugin  (Bukkit entry point)
+      │
+      ▼
+PluginBootstrap  ──────────────┐  wires everything
+      │                        │
+      ▼                        ▼
+ FileManager  ◄──────────  DebugCommand
+      │
+      ├──► FileRegistry        (in-memory store, keyed by absolute path)
+      ├──► FileSynchronizer ──► FileSynchronizationStrategy
+      └──► CustomFile
+              ├──► FileFactory   (creates the file on disk)
+              ├──► FileReader    (typed reads over FileConfiguration)
+              └──► FileSynchronizer
 
-### 2. Name-based lookups
+ AppLogger  and  FilizerExceptions  are injected downward into all of them.
+```
 
-`findFile(String)` is convenient, but it can become ambiguous if two files share the same name in different folders.
+Two properties hold and are worth preserving:
 
-Current recommendation:
-- prefer path-based lookup in new code
-- keep name-based lookup for compatibility
-- document the ambiguity behavior clearly for users of the API
+- **Nothing points back up.** `CustomFile` does not know about
+  `FileManager`; `FileRegistry` does not know about the plugin.
+- **No static state.** Every collaborator is passed through a constructor.
+  There is no service locator and no singleton in the runtime path.
 
-### 3. Plugin shutdown
+---
 
-`PluginBootstrap.stop()` is intentionally light for now.
+## Lifecycle
 
-It should eventually be responsible for:
-- stopping async resources
-- closing watchers
-- releasing runtime references if needed
+### Startup
 
-### 4. Package naming
+1. Bukkit calls `FilizerPlugin.onEnable()`.
+2. It constructs a `PluginBootstrap` and calls `start()`.
+3. `start()` builds, in order:
+   - `BukkitAppLogger` over the plugin's `java.util.logging.Logger`
+   - `FilizerExceptions`, bound to that logger
+   - `FileRegistry` (empty)
+   - the `FileSynchronizationStrategy` (currently `LastModifiedStrategy`)
+   - `FileManager`, receiving all of the above
+4. Commands are registered against that `FileManager`.
 
-The current package layout is already readable.
-The only package that may still evolve is `shared/util`, depending on whether you want to keep `FileChecker` there or move it to a more specific package later.
+The order is not incidental: the logger comes first because the exception
+factory needs it, and the exception factory comes before anything that can
+fail.
 
-## What remains to be added
+### Shutdown
 
-### Functional
+`FilizerPlugin.onDisable()` delegates to `PluginBootstrap.stop()`, which
+currently releases the references it holds. Nothing else needs closing yet
+— but this is the hook that will have to stop the watcher thread once
+`WatchServiceSynchronizationStrategy` exists. See
+[Known limitations](#known-limitations).
 
-- a complete WatchService implementation
-- a more explicit API for loading existing files
-- a clearer story for ambiguous file names
-- stronger lifecycle handling for background services
+---
 
-### Quality
+## Design decisions
 
-- unit tests for `FileManager`
-- tests for `FileRegistry`
-- tests for the centralized exceptions
-- lightweight integration tests for file operations
-- stricter validation of paths and file names
+### The registry is keyed by normalized absolute path
 
-### Documentation
+`FileRegistry` stores files in a map keyed by
+`path.toAbsolutePath().normalize().toString()`, not by file name.
 
-- usage examples for the public API
-- notes on edge cases
-- notes on duplicate names and path resolution
+Name-based keys break as soon as two modules each want their own
+`config.yml`. Path-based keys make that case correct by construction, at
+the cost of one ambiguity: `findFile(String name)` may match several
+entries. It returns `Optional.empty()` and logs a warning rather than
+guessing.
 
-## Suggested priorities
+*Trade-off accepted:* name lookup is convenient but lossy. It stays for
+ergonomics; the path-based overload is the correct one for library code.
 
-### High priority
+### Exceptions come from a factory, not from constructors
 
-1. Finish the WatchService strategy
-2. Add tests around file creation, lookup, and deletion
-3. Document the lookup behavior when names collide
+`FilizerExceptions` builds every failure. It holds the `AppLogger`, so
+constructing an exception also logs it — a failure can never be thrown
+silently.
 
-### Medium priority
+The typed exceptions extend `IllegalArgumentException` or
+`IllegalStateException` rather than a Filizer-specific hierarchy, so
+consumers are not forced to catch anything Filizer-specific to use the API.
 
-4. Improve plugin shutdown handling
-5. Refine error handling if new cases appear
-6. Decide whether `shared/util` should stay as-is or be renamed later
+### Logging is an interface
 
-### Low priority
+Filizer never calls `java.util.logging` directly. `AppLogger` has one
+adapter today (`BukkitAppLogger`), but the indirection is what lets the
+storage layer be unit-tested without a server, and lets other modules of
+the stack route Filizer's output through their own logging.
 
-7. Add API usage examples
-8. Expand internal documentation
-9. Prepare the codebase for future features
+### Synchronization is a strategy, not a flag
 
-## Summary
+Whether to reload a file that changed on disk is a policy, and it differs
+per deployment: an admin-editable config wants reloads, a plugin-owned data
+file does not. Encoding it as a `FileSynchronizationStrategy` keeps
+`CustomFile` free of branching and makes the policy swappable in one line
+at bootstrap.
 
-The codebase is already in a good shape for a small plugin:
-- the entry point is clean
-- the bootstrap owns wiring
-- the file subsystem is split by responsibility
-- shared logging and exceptions are centralized
+`CustomFile` calls `sync()` before **every** read and **every** mutation,
+so a strategy is the single choke point through which staleness is
+handled.
 
-The main remaining work is about finishing the sync story, adding tests, and keeping the API behavior well documented for other developers.
+### Writes are explicit
+
+Mutations stay in memory until `save()` is called. Auto-saving on every
+`set()` would make chained calls quadratic in disk writes; making it
+explicit keeps the write cost visible at the call site.
+
+---
+
+## Threading model
+
+| Component | Guarantee |
+| --- | --- |
+| `FileRegistry` | Backed by a `ConcurrentHashMap`. Registration and lookup are safe from any thread. |
+| `FileSynchronizer` / strategies | `synchronize()` runs **on the calling thread**, before every access. |
+| `CustomFile` | **Not** thread-safe. Its `FileConfiguration` and `lastModified` field are unguarded. |
+
+The practical rule: the registry may be shared freely, but a single
+`CustomFile` should be mutated from one thread — in a Bukkit plugin, the
+main server thread.
+
+Because `synchronize()` is on the hot path of every read, strategy
+implementations must stay cheap. `LastModifiedStrategy` is a single
+`File.lastModified()` stat call; anything materially more expensive belongs
+on a background thread instead.
+
+---
+
+## Extension points
+
+Three seams are meant to be implemented by consumers:
+
+| Interface | Implement it to… |
+| --- | --- |
+| `FileSynchronizationStrategy` | Change how external edits are detected. |
+| `AppLogger` | Route Filizer's logs somewhere other than the Bukkit logger. |
+| `FilizerExceptions` (subclass/replace) | Customize how failures are built and reported. |
+
+`FileManager` accepts all three through its constructor, so none of them
+requires touching Filizer's source.
+
+---
+
+## Known limitations
+
+These are the places where the current design is knowingly incomplete.
+Planned work for each is tracked in the [Roadmap](ROADMAP.md).
+
+**`WatchServiceSynchronizationStrategy` is a stub.** The class exists and
+documents its intended implementation, but `synchronize()` is empty. Using
+it today means no synchronization at all — `NeverSynchronizationStrategy`
+with extra steps. Event-driven sync also requires a background thread and a
+`WatchService` to close, which is the first thing that will give
+`PluginBootstrap.stop()` real work to do.
+
+**`findFile(String)` is ambiguous by design.** Documented above; callers
+that cannot tolerate it should use the path-based overload.
+
+**`PluginBootstrap.stop()` does not release external resources.** Nothing
+holds any yet. This becomes a correctness issue the moment a watcher
+thread exists.
+
+**No test suite.** The design deliberately avoids static state and Bukkit
+coupling so that `FileManager`, `FileRegistry` and the exception factory
+are testable — but the tests are not written.
+
+---
+
+This document is intentionally kept separate from the main
+[README](../README.md) so that design notes can evolve independently.

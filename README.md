@@ -1,6 +1,18 @@
+<div align="center">
+
 # Filizer
 
-**Filizer** is a lightweight file-management API for Paper / Bukkit servers.
+**A lightweight file-management API for Paper / Bukkit servers**
+
+[![Channel](https://img.shields.io/github/v/release/monsieurdoceo/Filizer?include_prereleases&label=channel&style=flat-square)](https://github.com/monsieurdoceo/Filizer/releases)
+[![Java](https://img.shields.io/badge/java-21-blue?style=flat-square)](https://adoptium.net/)
+[![Paper](https://img.shields.io/badge/paper-1.21.10-blue?style=flat-square)](https://papermc.io/)
+
+[Installation](docs/INSTALLATION.md)&nbsp; · &nbsp;[API Reference](docs/API_REFERENCE.md)&nbsp; · &nbsp;[Architecture](docs/ARCHITECTURE.md)&nbsp; · &nbsp;[Commands](docs/COMMANDS.md)
+
+</div>
+
+---
 
 It gives plugin developers a clean, typed facade over the files their
 plugin owns: create them, read them, write them, keep them in sync with the
@@ -10,9 +22,6 @@ repeating boilerplate in every plugin.
 File handling is format-agnostic: any extension can be created, registered,
 scanned and deleted. The typed configuration layer on top is backed by YAML
 today; support for other formats such as JSON is planned.
-
-- **Java:** 21
-- **Paper API:** `1.21.10-R0.1-SNAPSHOT`
 
 ---
 

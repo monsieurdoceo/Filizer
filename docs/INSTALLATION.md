@@ -1,6 +1,10 @@
-## Installation
+# Installation
 
-### Gradle (Groovy DSL)
+Everything you need to add Filizer to your project.
+
+---
+
+## Gradle (Groovy DSL)
 
 ```groovy
 repositories {
@@ -13,7 +17,7 @@ dependencies {
 }
 ```
 
-### Gradle (Kotlin DSL)
+## Gradle (Kotlin DSL)
 
 ```kotlin
 dependencies {
@@ -21,7 +25,7 @@ dependencies {
 }
 ```
 
-### Shading
+## Shading
 
 Filizer is designed to be embedded into your plugin rather than installed
 as a separate server plugin.
@@ -32,13 +36,13 @@ your final plugin JAR.
 This allows your plugin to be deployed without requiring a separate
 `Filizer.jar` on the server.
 
-### Using Filizer as a standalone plugin
+## Using Filizer as a standalone plugin
 
 Filizer can also be installed as a separate server plugin.
 
 In that case, use `compileOnly` instead:
 
-#### Groovy DSL
+### Groovy DSL
 
 ```groovy
 dependencies {
@@ -46,7 +50,7 @@ dependencies {
 }
 ```
 
-#### Kotlin DSL
+### Kotlin DSL
 
 ```kotlin
 dependencies {
@@ -60,3 +64,9 @@ Then declare Filizer as a runtime dependency in your `plugin.yml`:
 depend:
   - Filizer
 ```
+
+---
+
+This document is intentionally kept separate from the main
+[README](../README.md) so that installation instructions can evolve
+independently.

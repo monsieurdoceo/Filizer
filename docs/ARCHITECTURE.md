@@ -23,8 +23,14 @@ How Filizer is put together, and why.
 
 ## Goal
 
-Filizer wraps YAML configuration handling for Paper / Bukkit plugins so
+Filizer wraps configuration file handling for Paper / Bukkit plugins so
 that consumers never write file plumbing themselves.
+
+The `storage` layer is deliberately format-agnostic: `FileFactory`,
+`FileRegistry` and `storeAllFiles` deal in paths, never in extensions. Only
+the parsing seam — `CustomFile.reload()` and `FileReader` — is bound to a
+concrete format, which is YAML today. That boundary is where multi-format
+support will be introduced; see [Known limitations](#known-limitations).
 
 The guiding constraint is that **the plugin entry point stays thin**. The
 Bukkit lifecycle is an adapter, not the place where logic lives. Everything
@@ -221,6 +227,14 @@ it today means no synchronization at all — `NeverSynchronizationStrategy`
 with extra steps. Event-driven sync also requires a background thread and a
 `WatchService` to close, which is the first thing that will give
 `PluginBootstrap.stop()` real work to do.
+
+**Parsing is hardwired to YAML.** `CustomFile.reload()` calls
+`YamlConfiguration.loadConfiguration(file)` directly, and `FileReader`
+wraps Bukkit's `FileConfiguration`. Files of any extension can be created,
+registered and deleted, but reading their content assumes YAML. Supporting
+JSON and others means extracting a parser abstraction behind `CustomFile`,
+selected per file — most likely from the extension, with an explicit
+override.
 
 **`findFile(String)` is ambiguous by design.** Documented above; callers
 that cannot tolerate it should use the path-based overload.

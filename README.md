@@ -2,10 +2,14 @@
 
 **Filizer** is a lightweight file-management API for Paper / Bukkit servers.
 
-It gives plugin developers a clean, typed facade over YAML configuration
-files: create them, read them, write them, keep them in sync with the disk,
-and get meaningful exceptions when something goes wrong — without repeating
-boilerplate in every plugin.
+It gives plugin developers a clean, typed facade over the files their
+plugin owns: create them, read them, write them, keep them in sync with the
+disk, and get meaningful exceptions when something goes wrong — without
+repeating boilerplate in every plugin.
+
+File handling is format-agnostic: any extension can be created, registered,
+scanned and deleted. The typed configuration layer on top is backed by YAML
+today; support for other formats such as JSON is planned.
 
 - **Java:** 21
 - **Paper API:** `1.21.10-R0.1-SNAPSHOT`
@@ -31,9 +35,10 @@ boilerplate in every plugin.
 ## Why Filizer
 
 Working with configuration files in a Bukkit plugin usually means the same
-repeated code: check the parent directory, create the file, load the
-`YamlConfiguration`, remember to save, remember to reload when someone edits
-the file by hand, and wrap every `IOException` yourself.
+repeated code: check the parent directory, create the file, parse it,
+remember to save, remember to reload when someone edits the file by hand,
+and wrap every `IOException` yourself. Then repeat it for the next file
+format.
 
 Filizer factors all of that into a small set of components:
 
@@ -43,7 +48,7 @@ Filizer factors all of that into a small set of components:
 | Holding the managed files in memory | `FileRegistry` |
 | Public entry point for plugins | `FileManager` |
 | One managed file (read/write/save) | `CustomFile` |
-| Typed reads on YAML content | `FileReader` |
+| Typed reads on the file content | `FileReader` |
 | Detecting external edits | `FileSynchronizer` + strategies |
 | Typed, self-logging exceptions | `FilizerExceptions` |
 

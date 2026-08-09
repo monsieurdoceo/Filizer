@@ -26,6 +26,21 @@ needs to:
 Once event-driven, `synchronize()` legitimately stays empty — the reload
 happens from the watcher thread rather than on access.
 
+### Support formats other than YAML
+
+Parsing is currently hardwired to `YamlConfiguration`. Making the format a
+seam rather than an assumption:
+
+- [ ] Extract a parser abstraction behind `CustomFile` (load + save)
+- [ ] Select the implementation per file, resolved from the extension,
+      with an explicit override available
+- [ ] Add a JSON implementation
+- [ ] Decide what `FileReader` returns for formats that have no Bukkit
+      `ConfigurationSection` equivalent
+
+This is the single biggest change to the public API, so it should land
+before the first stable release.
+
 ### Add a test suite
 
 - [ ] `FileManager` — creation, lookup, deletion, idempotence

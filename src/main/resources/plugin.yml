@@ -1,5 +1,5 @@
 name: Filizer
-version: 0.0.5-SNAPSHOT
+version: 0.1.0
 main: io.github.monsieurdoceo.filizer.FilizerPlugin
 api-version: 1.21.10
 authors: [MonsieurDoceo, TheSakyo]

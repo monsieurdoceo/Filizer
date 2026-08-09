@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.monsieurdoceo.filizer:Filizer:0.0.5'
+    implementation 'io.github.monsieurdoceo.filizer:Filizer:0.1.0'
 }
 ```
 
@@ -21,7 +21,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.monsieurdoceo.filizer:Filizer:0.0.5")
+    implementation("io.github.monsieurdoceo.filizer:Filizer:0.1.0")
 }
 ```
 
@@ -46,7 +46,7 @@ In that case, use `compileOnly` instead:
 
 ```groovy
 dependencies {
-    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:0.0.5'
+    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:0.1.0'
 }
 ```
 
@@ -54,7 +54,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    compileOnly("io.github.monsieurdoceo.filizer:Filizer:0.0.5")
+    compileOnly("io.github.monsieurdoceo.filizer:Filizer:0.1.0")
 }
 ```
 

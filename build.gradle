@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.monsieurdoceo.filizer'
-version = '0.0.5'
+version = '0.1.0'
 
 gradlePlugin {
     website = 'https://github.com/monsieurdoceo/Filizer'

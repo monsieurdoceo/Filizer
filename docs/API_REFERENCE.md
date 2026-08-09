@@ -326,6 +326,14 @@ and builds** the exception in one step. See the
 [Error handling](../README.md#error-handling) section of the README for the
 full table of exception types.
 
+> **Planned.** A dedicated **Exception** module will generalize this
+> mechanism across the whole stack, and Filizer will wire it in
+> automatically. Because the typed exceptions extend
+> `IllegalArgumentException` and `IllegalStateException` rather than a
+> Filizer-specific hierarchy, that change is not expected to break consumer
+> code. See
+> [Relationship to the Exception module](ARCHITECTURE.md#relationship-to-the-exception-module).
+
 ---
 
 This document is intentionally kept separate from the main

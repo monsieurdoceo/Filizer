@@ -190,6 +190,14 @@ Errors go through `FilizerExceptions`, a factory that **logs and builds** the ex
 
 Logging is abstracted behind `AppLogger`; `BukkitAppLogger` adapts it to the plugin's `java.util.logging.Logger`. Implement `AppLogger` yourself to route logs elsewhere (tests, another module of the stack, a file appender).
 
+> **Planned:** `FilizerExceptions` is a local solution to a problem every
+> module of the stack shares. A dedicated **Exception** module will
+> generalize it — one factory pattern, one logging contract, one error
+> vocabulary across Filizer, GUI, World and the rest. Filizer will then
+> depend on that module and wire it in automatically, so consumers get the
+> shared behaviour without any extra setup. The table above describes the
+> current, self-contained implementation.
+
 ---
 
 ## Commands

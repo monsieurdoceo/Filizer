@@ -17,6 +17,7 @@ How Filizer is put together, and why.
 - [Design decisions](#design-decisions)
 - [Threading model](#threading-model)
 - [Extension points](#extension-points)
+- [Relationship to the Exception module](#relationship-to-the-exception-module)
 - [Known limitations](#known-limitations)
 
 ---
@@ -155,6 +156,13 @@ The typed exceptions extend `IllegalArgumentException` or
 `IllegalStateException` rather than a Filizer-specific hierarchy, so
 consumers are not forced to catch anything Filizer-specific to use the API.
 
+This design is deliberately a placeholder. Every module of the stack needs
+the same thing — typed errors that log themselves — and duplicating the
+pattern per module would give four slightly divergent error vocabularies.
+The dedicated **Exception** module will own that concern; `FilizerExceptions`
+is shaped the way it is so the migration is a substitution rather than a
+rewrite. See [Relationship to the Exception module](#relationship-to-the-exception-module).
+
 ### Logging is an interface
 
 Filizer never calls `java.util.logging` directly. `AppLogger` has one
@@ -213,6 +221,47 @@ Three seams are meant to be implemented by consumers:
 
 `FileManager` accepts all three through its constructor, so none of them
 requires touching Filizer's source.
+
+---
+
+## Relationship to the Exception module
+
+Filizer is one module of a wider stack. **Exception** is the module that
+will own error handling for all of them.
+
+### What it will provide
+
+- A single factory contract, so every module builds errors the same way
+- A shared logging seam, generalizing what `AppLogger` does locally
+- One error vocabulary, so a plugin consuming Filizer, GUI and World
+  catches and reports failures uniformly
+
+### How Filizer will consume it
+
+Filizer will declare the Exception module as a dependency and wire it in
+during bootstrap. **No configuration is expected on the consumer side** —
+a plugin using `FileManager` gets the shared behaviour by virtue of using
+Filizer at all.
+
+### Why the current code is already shaped for it
+
+Two properties make the migration a substitution rather than a rewrite:
+
+- **`FilizerExceptions` is injected, never static.** `FileManager` takes it
+  as a constructor argument, and every class that can fail receives it the
+  same way. Swapping the implementation touches
+  [`PluginBootstrap`](#lifecycle) and nothing else.
+- **The typed exceptions extend JDK types.** Consumers catch
+  `IllegalArgumentException` and `IllegalStateException`, not Filizer
+  classes — so re-parenting them under a shared hierarchy does not break
+  existing catch blocks.
+
+The same reasoning applies to `AppLogger`: it is an interface with one
+adapter precisely so a shared implementation can replace it later.
+
+Until the Exception module exists, `FilizerExceptions` is the complete and
+supported way to handle errors in Filizer. Nothing documented in the
+[API Reference](API_REFERENCE.md) is expected to change for consumers.
 
 ---
 

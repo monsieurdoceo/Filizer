@@ -41,6 +41,22 @@ seam rather than an assumption:
 This is the single biggest change to the public API, so it should land
 before the first stable release.
 
+### Adopt the shared Exception module
+
+`FilizerExceptions` and `AppLogger` solve locally what every module of the
+stack needs. The dedicated **Exception** module will generalize both.
+
+- [ ] Declare the Exception module as a dependency
+- [ ] Re-parent the typed exceptions under the shared hierarchy, keeping
+      `IllegalArgumentException` / `IllegalStateException` as supertypes so
+      existing catch blocks keep working
+- [ ] Replace `FilizerExceptions` with the shared factory, wired in
+      `PluginBootstrap` — consumers should need no configuration
+- [ ] Decide whether `AppLogger` is replaced by the shared logging contract
+      or kept as a thin adapter over it
+
+Blocked on the Exception module itself.
+
 ### Add a test suite
 
 - [ ] `FileManager` — creation, lookup, deletion, idempotence

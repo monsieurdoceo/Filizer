@@ -4,7 +4,7 @@
 
 **A lightweight file-management API for Paper / Bukkit servers**
 
-[![Channel](https://img.shields.io/github/v/release/monsieurdoceo/Filizer?include_prereleases&label=channel&style=flat-square)](https://github.com/monsieurdoceo/Filizer/releases)
+[![Channel](https://img.shields.io/github/v/release/monsieurdoceo/Filizer?include_prereleases&label=release&style=flat-square)](https://github.com/monsieurdoceo/Filizer/releases)
 [![Java](https://img.shields.io/badge/java-21-blue?style=flat-square)](https://adoptium.net/)
 [![Paper](https://img.shields.io/badge/paper-1.21.10-blue?style=flat-square)](https://papermc.io/)
 

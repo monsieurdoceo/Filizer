@@ -2,6 +2,14 @@
 
 Everything you need to add Filizer to your project.
 
+> Throughout this page, replace `VERSION` with the version you want —
+> `0.1.1`, for example. Published versions are listed on the
+> [Releases page](https://github.com/monsieurdoceo/Filizer/releases).
+>
+> Release tags carry a channel suffix (`0.1.1-legacy`) that identifies the
+> maturity of the release. Drop it: the published artifact is always the
+> bare number.
+
 ---
 
 ## Repository
@@ -25,7 +33,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation 'io.github.monsieurdoceo.filizer:Filizer:0.1.0'
+    implementation 'io.github.monsieurdoceo.filizer:Filizer:VERSION'
 }
 ```
 
@@ -33,7 +41,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.monsieurdoceo.filizer:Filizer:0.1.0")
+    implementation("io.github.monsieurdoceo.filizer:Filizer:VERSION")
 }
 ```
 
@@ -58,7 +66,7 @@ In that case, use `compileOnly` instead:
 
 ```groovy
 dependencies {
-    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:0.1.0'
+    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:VERSION'
 }
 ```
 
@@ -66,7 +74,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    compileOnly("io.github.monsieurdoceo.filizer:Filizer:0.1.0")
+    compileOnly("io.github.monsieurdoceo.filizer:Filizer:VERSION")
 }
 ```
 
@@ -99,7 +107,7 @@ repositories {
 
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT'
-    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:0.1.0'
+    compileOnly 'io.github.monsieurdoceo.filizer:Filizer:VERSION'
 }
 
 java {
@@ -107,7 +115,7 @@ java {
 }
 ```
 
-Drop `Filizer-0.1.0.jar` into the server's `plugins/` folder next to your own
+Drop `Filizer-VERSION.jar` into the server's `plugins/` folder next to your own
 plugin. To avoid that step, switch `compileOnly` to `implementation`, shade
 Filizer into your jar, and remove the `depend` entry from `plugin.yml`.
 

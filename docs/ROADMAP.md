@@ -132,6 +132,10 @@ echo "bin/" >> .gitignore
 - [x] Add a `LICENSE` file — Apache 2.0
 - [x] Document the release procedure — kept internally, outside this
       repository
+- [x] Automate publication — `.github/workflows/publish.yml` runs
+      `publishPlugins` when a GitHub release is published
+- [ ] Add the `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET` secrets in
+      the repository settings, without which the workflow fails
 
 > The `gradlePlugin { }` block and the `com.gradle.plugin-publish` plugin in
 > `build.gradle` are what upload the jar to `plugins.gradle.org/m2/`. They

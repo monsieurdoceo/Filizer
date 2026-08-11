@@ -7,6 +7,7 @@
 [![Channel](https://img.shields.io/github/v/release/monsieurdoceo/Filizer?include_prereleases&label=release&style=flat-square)](https://github.com/monsieurdoceo/Filizer/releases)
 [![Java](https://img.shields.io/badge/java-21-blue?style=flat-square)](https://adoptium.net/)
 [![Paper](https://img.shields.io/badge/paper-1.21.10-blue?style=flat-square)](https://papermc.io/)
+[![License](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.0-lightgrey?style=flat-square)](LICENSE)
 
 [Installation](docs/INSTALLATION.md)&nbsp; · &nbsp;[API Reference](docs/API_REFERENCE.md)&nbsp; · &nbsp;[Architecture](docs/ARCHITECTURE.md)&nbsp; · &nbsp;[Commands](docs/COMMANDS.md)
 
@@ -252,10 +253,22 @@ Authors: **[MonsieurDoceo](https://github.com/monsieurdoceo)**, **[TheSakyo](htt
 
 ## License
 
-Filizer is released under the [Apache License 2.0](LICENSE).
+Filizer is released under the
+[PolyForm Perimeter License 1.0.0](LICENSE) — source-available, free to use,
+with one restriction.
 
-You are free to use it, including in commercial projects — a server that
-monetises may depend on Filizer without restriction. In return, the license
-requires that you keep the copyright notice, state any changes you make to
-the source, and refrain from using the authors' names to promote your own
-work.
+**You may**
+
+- use Filizer in any project, personal or commercial
+- sell a plugin, server or service that depends on Filizer
+- modify it for your own needs
+- distribute it as part of a larger project, under that project's own terms
+
+**You may not**
+
+- redistribute Filizer as a product that competes with it — a renamed fork,
+  a repackaged copy, or an equivalent library derived from it
+
+Whoever receives a copy must also receive these terms and the copyright
+notice. In short: build whatever you like on top of Filizer, including for
+money — just don't turn Filizer itself into someone else's product.

@@ -1,4 +1,4 @@
-# Roadmap
+      # Roadmap
 
 Planned and pending work on Filizer.
 
@@ -69,7 +69,7 @@ possible.
 
 ### Document collision behaviour
 
-- [ ] Spell out, in the API reference, exactly what `findFile(String)`
+- [x] Spell out, in the API reference, exactly what `findFile(String)`
       does when several registered files share a name
 
 ---
@@ -111,14 +111,32 @@ without creating it" would be clearer.
 
 ---
 
+## Repository hygiene
+
+- [ ] Stop tracking `bin/` — it holds Eclipse build output (`.class` files)
+      and a stale `plugin.yml`, which pollutes every diff
+
+```
+git rm -r --cached bin
+echo "bin/" >> .gitignore
+```
+
+---
+
 ## Build and publishing
 
-- [ ] Decide the publication target (JitPack, GitHub Packages, Maven
-      Central)
-- [ ] Add a `publishing { }` block with POM metadata
-- [ ] Produce `-sources` and `-javadoc` jars
-- [ ] Add a `LICENSE` file
-- [ ] Align the version between `build.gradle` and `plugin.yml`
+- [x] Decide the publication target — the Gradle Plugin Portal, whose Maven
+      repository at `https://plugins.gradle.org/m2/` hosts the jar
+- [x] Produce `-sources` and `-javadoc` jars
+- [x] Align the version between `build.gradle` and `plugin.yml`
+- [x] Add a `LICENSE` file — Apache 2.0
+- [x] Document the release procedure — kept internally, outside this
+      repository
+
+> The `gradlePlugin { }` block and the `com.gradle.plugin-publish` plugin in
+> `build.gradle` are what upload the jar to `plugins.gradle.org/m2/`. They
+> look out of place for a Bukkit plugin, but removing them would stop
+> publication.
 
 ---
 

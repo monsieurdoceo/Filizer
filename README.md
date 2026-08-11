@@ -249,3 +249,13 @@ Design notes and open questions live in [`docs/ARCHITECTURE.md`](docs/ARCHITECTU
 ## Credits
 
 Authors: **[MonsieurDoceo](https://github.com/monsieurdoceo)**, **[TheSakyo](https://github.com/TheSakyo)**
+
+## License
+
+Filizer is released under the [Apache License 2.0](LICENSE).
+
+You are free to use it, including in commercial projects — a server that
+monetises may depend on Filizer without restriction. In return, the license
+requires that you keep the copyright notice, state any changes you make to
+the source, and refrain from using the authors' names to promote your own
+work.

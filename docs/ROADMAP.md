@@ -129,7 +129,7 @@ echo "bin/" >> .gitignore
       repository at `https://plugins.gradle.org/m2/` hosts the jar
 - [x] Produce `-sources` and `-javadoc` jars
 - [x] Align the version between `build.gradle` and `plugin.yml`
-- [x] Add a `LICENSE` file — PolyForm Perimeter 1.0.0, source-available:
+- [x] Add a `LICENSE` file — PolyForm Perimeter 1.0.1, source-available:
       free to use and to build commercial products on, but not to
       redistribute as a competing library
 - [x] Document the release procedure — kept internally, outside this

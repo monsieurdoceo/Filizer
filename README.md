@@ -7,7 +7,7 @@
 [![Channel](https://img.shields.io/github/v/release/monsieurdoceo/Filizer?include_prereleases&label=release&style=flat-square)](https://github.com/monsieurdoceo/Filizer/releases)
 [![Java](https://img.shields.io/badge/java-21-blue?style=flat-square)](https://adoptium.net/)
 [![Paper](https://img.shields.io/badge/paper-1.21.10-blue?style=flat-square)](https://papermc.io/)
-[![License](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.0-lightgrey?style=flat-square)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.1-lightgrey?style=flat-square)](LICENSE.md)
 
 [Installation](docs/INSTALLATION.md)&nbsp; · &nbsp;[API Reference](docs/API_REFERENCE.md)&nbsp; · &nbsp;[Architecture](docs/ARCHITECTURE.md)&nbsp; · &nbsp;[Commands](docs/COMMANDS.md)
 
@@ -254,7 +254,7 @@ Authors: **[MonsieurDoceo](https://github.com/monsieurdoceo)**, **[TheSakyo](htt
 ## License
 
 Filizer is released under the
-[PolyForm Perimeter License 1.0.0](LICENSE.md) — source-available, free to use,
+[PolyForm Perimeter License 1.0.1](LICENSE.md) — source-available, free to use,
 with one restriction.
 
 **You may**

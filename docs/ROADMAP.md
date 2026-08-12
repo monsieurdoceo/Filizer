@@ -136,7 +136,7 @@ echo "bin/" >> .gitignore
       repository
 - [x] Automate publication — `.github/workflows/publish.yml` runs
       `publishPlugins` when a GitHub release is published
-- [ ] Add the `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET` secrets in
+- [x] Add the `GRADLE_PUBLISH_KEY` and `GRADLE_PUBLISH_SECRET` secrets in
       the repository settings, without which the workflow fails
 
 > The `gradlePlugin { }` block and the `com.gradle.plugin-publish` plugin in
